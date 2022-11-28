@@ -5,10 +5,6 @@ import com.flink.streaming.common.enums.SqlCommand;
 import com.flink.streaming.common.model.SqlCommandCall;
 import com.flink.streaming.common.sql.SqlFileParser;
 import com.flink.streaming.sql.util.ValidationConstants;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.calcite.config.Lex;
 import org.apache.calcite.sql.SqlNode;
@@ -19,11 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.sql.parser.validate.FlinkSqlConformance;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.table.api.EnvironmentSettings;
-import org.apache.flink.table.api.SqlDialect;
-import org.apache.flink.table.api.TableConfig;
-import org.apache.flink.table.api.TableEnvironment;
-import org.apache.flink.table.api.TableException;
+import org.apache.flink.table.api.*;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.apache.flink.table.api.config.TableConfigOptions;
 import org.apache.flink.table.planner.calcite.CalciteConfig;
@@ -31,6 +23,11 @@ import org.apache.flink.table.planner.delegation.FlinkSqlParserFactories;
 import org.apache.flink.table.planner.parse.CalciteParser;
 import org.apache.flink.table.planner.utils.JavaScalaConversionUtil;
 import org.apache.flink.table.planner.utils.TableConfigUtils;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.regex.Matcher;
 
 
 /*
