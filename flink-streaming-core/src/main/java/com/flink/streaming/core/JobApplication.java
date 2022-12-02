@@ -12,7 +12,7 @@ import com.flink.streaming.core.model.JobRunParam;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.JobID;
 import org.apache.flink.api.java.utils.ParameterTool;
-import org.apache.flink.calcite.shaded.com.google.common.base.Preconditions;
+import org.apache.flink.shaded.guava30.com.google.common.base.Preconditions;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
