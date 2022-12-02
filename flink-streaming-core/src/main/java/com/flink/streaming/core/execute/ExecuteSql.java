@@ -93,9 +93,6 @@ public class ExecuteSql {
         case "CatalogSinkModifyOperation":
           modifyOperationList.add((CatalogSinkModifyOperation) operation);
           break;
-//        case "ModifyOperation":
-//          modifyOperationList.add((ModifyOperation) operation);
-//          break;
         default:
           throw new RuntimeException("不支持该语法 sql=" + stmt);
       }
