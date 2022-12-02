@@ -9,10 +9,6 @@ import com.flink.streaming.core.checkpoint.CheckPointParams;
 import com.flink.streaming.core.checkpoint.FsCheckPoint;
 import com.flink.streaming.core.execute.ExecuteSql;
 import com.flink.streaming.core.model.JobRunParam;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.JobID;
 import org.apache.flink.api.java.utils.ParameterTool;
@@ -23,6 +19,11 @@ import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -60,7 +61,7 @@ public class JobApplication {
         LOG.info("[SQL_BATCH]本次任务是批任务");
         //批处理
         settings = EnvironmentSettings.newInstance()
-            .useBlinkPlanner()
+//            .useBlinkPlanner()
             .inBatchMode()
             .build();
         tEnv = TableEnvironment.create(settings);
@@ -70,7 +71,7 @@ public class JobApplication {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         settings = EnvironmentSettings.newInstance()
-            .useBlinkPlanner()
+//            .useBlinkPlanner()
             .inStreamingMode()
             .build();
         tEnv = StreamTableEnvironment.create(env, settings);

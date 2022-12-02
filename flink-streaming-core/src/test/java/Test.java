@@ -1,7 +1,4 @@
 import com.flink.streaming.core.config.Configurations;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
@@ -10,6 +7,10 @@ import org.apache.flink.table.api.internal.TableEnvironmentInternal;
 import org.apache.flink.table.delegation.Parser;
 import org.apache.flink.table.operations.Operation;
 import org.apache.flink.table.operations.command.SetOperation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -65,7 +66,7 @@ public class Test {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
     settings = EnvironmentSettings.newInstance()
-        .useBlinkPlanner()
+//        .useBlinkPlanner()
         .inStreamingMode()
         .build();
     tEnv = StreamTableEnvironment.create(env, settings);

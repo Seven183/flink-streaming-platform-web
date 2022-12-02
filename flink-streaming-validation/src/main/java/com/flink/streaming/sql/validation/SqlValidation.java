@@ -43,7 +43,7 @@ public class SqlValidation {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
     EnvironmentSettings settings = EnvironmentSettings.newInstance()
-        .useBlinkPlanner()
+//        .useBlinkPlanner()
         .inStreamingMode()
         .build();
 
@@ -99,7 +99,7 @@ public class SqlValidation {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
     EnvironmentSettings settings = EnvironmentSettings.newInstance()
-        .useBlinkPlanner()
+//        .useBlinkPlanner()
         .inStreamingMode()
         .build();
 

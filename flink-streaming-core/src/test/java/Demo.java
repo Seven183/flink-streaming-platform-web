@@ -1,17 +1,18 @@
 import com.flink.streaming.common.sql.SqlFileParser;
 import com.flink.streaming.core.execute.ExecuteSql;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.bridge.java.StreamTableEnvironment;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
 public class Demo {
 
 
-  private static String test_sql_file = "/Users/edy/git/flink-streaming-platform-web/flink-streaming-core/src/test.sql";
+  private static String test_sql_file = "D:\\code\\flink-streaming-platform-web\\flink-streaming-core\\src\\test.sql";
 
 
   public static void main(String[] args) throws Exception {
@@ -23,7 +24,7 @@ public class Demo {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
     settings = EnvironmentSettings.newInstance()
-        .useBlinkPlanner()
+//        .useBlinkPlanner()
         .inStreamingMode()
         .build();
     tEnv = StreamTableEnvironment.create(env, settings);

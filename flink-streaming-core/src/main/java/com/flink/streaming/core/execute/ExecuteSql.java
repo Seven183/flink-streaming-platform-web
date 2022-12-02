@@ -3,8 +3,6 @@ package com.flink.streaming.core.execute;
 import com.flink.streaming.common.model.SqlCommandCall;
 import com.flink.streaming.core.config.Configurations;
 import com.flink.streaming.core.logs.LogPrint;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.JobID;
 import org.apache.flink.table.api.StatementSet;
@@ -16,6 +14,9 @@ import org.apache.flink.table.operations.CatalogSinkModifyOperation;
 import org.apache.flink.table.operations.ModifyOperation;
 import org.apache.flink.table.operations.Operation;
 import org.apache.flink.table.operations.command.SetOperation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -92,6 +93,9 @@ public class ExecuteSql {
         case "CatalogSinkModifyOperation":
           modifyOperationList.add((CatalogSinkModifyOperation) operation);
           break;
+//        case "ModifyOperation":
+//          modifyOperationList.add((ModifyOperation) operation);
+//          break;
         default:
           throw new RuntimeException("不支持该语法 sql=" + stmt);
       }
