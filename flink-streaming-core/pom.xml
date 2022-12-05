@@ -213,13 +213,21 @@
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-kafka</artifactId>
             <version>1.15.1</version>
-<!--            <scope>provided</scope>-->
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
+            <artifactId>flink-sql-connector-kafka</artifactId>
+            <version>1.15.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>3.3.1</version>
+            <version>2.8.1</version>
+            <scope>provided</scope>
         </dependency>
 
 
@@ -230,78 +238,6 @@
             <version>1.15.0</version>
             <scope>provided</scope>
         </dependency>
-
-        <!--flink 1.14.3 -->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-table-api-java-bridge_${scala.binary.version}</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-table-planner_${scala.binary.version}</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>slf4j-api</artifactId>-->
-<!--                    <groupId>org.slf4j</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>commons-cli</artifactId>-->
-<!--                    <groupId>commons-cli</groupId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>slf4j-api</artifactId>-->
-<!--                    <groupId>org.slf4j</groupId>-->
-<!--                </exclusion>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>scala-parser-combinators_2.11</artifactId>-->
-<!--                    <groupId>org.scala-lang.modules</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-runtime-web_${scala.binary.version}</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <artifactId>commons-cli</artifactId>-->
-<!--                    <groupId>commons-cli</groupId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; rocksdb&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-statebackend-rocksdb_${scala.binary.version}</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; Hive Connector的支持，仅在编译时生效&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.flink</groupId>-->
-<!--            <artifactId>flink-connector-hive_2.11</artifactId>-->
-<!--            <version>${flink.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
-
 
         <!-- Flink modules  end -->
 
