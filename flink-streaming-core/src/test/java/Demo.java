@@ -12,7 +12,7 @@ import java.util.List;
 public class Demo {
 
 
-  private static String test_sql_file = "D:\\code\\flink-streaming-platform-web\\flink-streaming-core\\src\\test.sql";
+  private static String test_sql_file = "C:\\Users\\Seven.si\\Desktop\\test\\1.sql";
 
 
   public static void main(String[] args) throws Exception {
