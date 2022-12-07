@@ -11,8 +11,13 @@ import com.flink.streaming.core.execute.ExecuteSql;
 import com.flink.streaming.core.model.JobRunParam;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.flink.api.common.JobID;
+import org.apache.flink.api.common.RuntimeExecutionMode;
+import org.apache.flink.api.common.restartstrategy.RestartStrategies;
+import org.apache.flink.api.common.time.Time;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.shaded.guava30.com.google.common.base.Preconditions;
+import org.apache.flink.streaming.api.CheckpointingMode;
+import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.table.api.EnvironmentSettings;
 import org.apache.flink.table.api.TableEnvironment;
@@ -24,6 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author zhuhuipei
@@ -68,7 +74,20 @@ public class JobApplication {
       } else {
         LOG.info("[SQL_STREAMING]本次任务是流任务");
         //默认是流 流处理 目的是兼容之前版本
+
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
+        env.setRuntimeMode(RuntimeExecutionMode.AUTOMATIC);
+        env.enableCheckpointing(3000L); //设置检查点
+        env.getCheckpointConfig().setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
+        env.getCheckpointConfig().setMinPauseBetweenCheckpoints(500);
+        env.getCheckpointConfig().setCheckpointTimeout(60000);
+
+        env.getCheckpointConfig().setMaxConcurrentCheckpoints(1);
+        env.setRestartStrategy(RestartStrategies.fixedDelayRestart(
+                3, // 最多重启3次数
+                Time.of(5, TimeUnit.SECONDS) // 重启时间间隔
+        ));
+        env.getCheckpointConfig().setExternalizedCheckpointCleanup(CheckpointConfig.ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
 
         settings = EnvironmentSettings.newInstance()
 //            .useBlinkPlanner()
