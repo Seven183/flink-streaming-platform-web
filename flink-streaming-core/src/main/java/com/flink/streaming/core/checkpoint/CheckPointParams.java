@@ -28,46 +28,27 @@ public class CheckPointParams {
    */
   public static CheckPointParam buildCheckPointParam(ParameterTool parameterTool) throws Exception {
 
-    String checkpointDir = parameterTool
-        .get(CheckPointParameterEnums.checkpointDir.name(), SystemConstant.SPACE);
-    //如果checkpointDir为空不启用CheckPoint
+    String checkpointDir = parameterTool.get(CheckPointParameterEnums.checkpointDir.name(), SystemConstant.SPACE);
     if (StringUtils.isEmpty(checkpointDir)) {
       return null;
     }
-    String checkpointingMode = parameterTool.get(CheckPointParameterEnums.checkpointingMode.name(),
-        CheckpointingMode.EXACTLY_ONCE.name());
-
-    String checkpointInterval = parameterTool
-        .get(CheckPointParameterEnums.checkpointInterval.name(),
-            SystemConstant.SPACE);
-
-    String checkpointTimeout = parameterTool
-        .get(CheckPointParameterEnums.checkpointTimeout.name(), SystemConstant.SPACE);
-
-    String tolerableCheckpointFailureNumber =
-        parameterTool.get(CheckPointParameterEnums.tolerableCheckpointFailureNumber.name(),
-            SystemConstant.SPACE);
-
-    String asynchronousSnapshots = parameterTool
-        .get(CheckPointParameterEnums.asynchronousSnapshots.name(), SystemConstant.SPACE);
-
-    String externalizedCheckpointCleanup =
-        parameterTool.get(CheckPointParameterEnums.externalizedCheckpointCleanup.name(),
-            SystemConstant.SPACE);
-
-    String stateBackendType = parameterTool
-        .get(CheckPointParameterEnums.stateBackendType.name(), SystemConstant.SPACE);
-
-    String enableIncremental = parameterTool
-        .get(CheckPointParameterEnums.enableIncremental.name(), SystemConstant.SPACE);
+    String checkpointingMode = parameterTool.get(CheckPointParameterEnums.checkpointingMode.name(), CheckpointingMode.EXACTLY_ONCE.name());
+    String checkpointInterval = parameterTool.get(CheckPointParameterEnums.checkpointInterval.name(), SystemConstant.SPACE);
+    String checkpointTimeout = parameterTool.get(CheckPointParameterEnums.checkpointTimeout.name(), SystemConstant.SPACE);
+    String tolerableCheckpointFailureNumber = parameterTool.get(CheckPointParameterEnums.tolerableCheckpointFailureNumber.name(), SystemConstant.SPACE);
+    String asynchronousSnapshots = parameterTool.get(CheckPointParameterEnums.asynchronousSnapshots.name(), SystemConstant.SPACE);
+    String externalizedCheckpointCleanup = parameterTool.get(CheckPointParameterEnums.externalizedCheckpointCleanup.name(), SystemConstant.SPACE);
+    String stateBackendType = parameterTool.get(CheckPointParameterEnums.stateBackendType.name(), SystemConstant.SPACE);
+    String enableIncremental = parameterTool.get(CheckPointParameterEnums.enableIncremental.name(), SystemConstant.SPACE);
 
     CheckPointParam checkPointParam = new CheckPointParam();
     if (StringUtils.isNotEmpty(asynchronousSnapshots)) {
       checkPointParam.setAsynchronousSnapshots(Boolean.parseBoolean(asynchronousSnapshots));
     }
-    checkPointParam.setCheckpointDir(checkpointDir);
 
+    checkPointParam.setCheckpointDir(checkpointDir);
     checkPointParam.setCheckpointingMode(checkpointingMode);
+
     if (StringUtils.isNotEmpty(checkpointInterval)) {
       checkPointParam.setCheckpointInterval(Long.valueOf(checkpointInterval));
     }
@@ -87,6 +68,9 @@ public class CheckPointParams {
     if (StringUtils.isNotEmpty(enableIncremental)) {
       checkPointParam.setEnableIncremental(Boolean.parseBoolean(enableIncremental.trim()));
     }
+
+    checkPointParam.setExternalizedCheckpointCleanup("RETAIN_ON_CANCELLATION");
+
     log.info("checkPointParam={}", checkPointParam);
     System.out.println("checkPointParam=" + checkPointParam);
     return checkPointParam;

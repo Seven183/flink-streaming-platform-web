@@ -57,8 +57,7 @@ public class ExecuteSql {
         //set
         case "SetOperation":
           SetOperation setOperation = (SetOperation) operation;
-          Configurations.setSingleConfiguration(tEnv, setOperation.getKey().get(),
-              setOperation.getValue().get());
+          Configurations.setSingleConfiguration(tEnv, setOperation.getKey().get(), setOperation.getValue().get());
           break;
 
         case "BeginStatementSetOperation":
