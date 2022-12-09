@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 核心线程10个 最大线程100 队列200 公平策略
+ * 核心线程10个 最大线程100 队列400 公平策略
  *
  * @author zhuhuipei
  * @Description:

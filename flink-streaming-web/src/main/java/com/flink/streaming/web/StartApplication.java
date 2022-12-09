@@ -2,14 +2,15 @@ package com.flink.streaming.web;
 
 import cn.hutool.core.io.IoUtil;
 import com.flink.streaming.web.common.SystemConstants;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import lombok.extern.slf4j.Slf4j;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.io.ClassPathResource;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * 管理界面启动类
@@ -25,7 +26,7 @@ public class StartApplication {
 
   public static void main(String[] args) throws Exception {
     log.info("##########web服务开始启动############");
-    readBanner();
+//    readBanner();
     SpringApplication.run(StartApplication.class, args);
     log.info("##########web服务完毕############");
   }

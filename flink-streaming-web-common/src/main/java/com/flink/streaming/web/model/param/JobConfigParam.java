@@ -12,14 +12,7 @@ import lombok.Data;
 @Data
 public class JobConfigParam extends PageParam {
 
-  /**
-   * @author zhuhuipei
-   * @date 2020-07-15
-   * @time 02:07
-   * @see com.flink.streaming.web.enums.JobConfigStatus
-   */
   private Integer status;
-
 
   /**
    * 任务名称
