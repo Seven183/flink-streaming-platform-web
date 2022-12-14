@@ -9,7 +9,6 @@ import com.flink.streaming.web.model.param.UploadFileParam;
 import com.flink.streaming.web.model.vo.PageVO;
 import com.flink.streaming.web.service.SystemConfigService;
 import com.flink.streaming.web.service.UploadFileService;
-import java.io.File;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 
 /**
  * @author zhuhuipei
@@ -89,7 +90,5 @@ public class UploadApiController extends BaseController {
       return RestResult.error("queryUploadFile is  error : " + e.getMessage());
     }
   }
-
-
 
 }

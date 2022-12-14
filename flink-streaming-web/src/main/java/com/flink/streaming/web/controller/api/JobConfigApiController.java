@@ -14,12 +14,7 @@ import com.flink.streaming.web.common.util.CliConfigUtil;
 import com.flink.streaming.web.common.util.HttpServiceCheckerUtil;
 import com.flink.streaming.web.common.util.HttpUtil;
 import com.flink.streaming.web.controller.web.BaseController;
-import com.flink.streaming.web.enums.AlarmTypeEnum;
-import com.flink.streaming.web.enums.DeployModeEnum;
-import com.flink.streaming.web.enums.JobConfigStatus;
-import com.flink.streaming.web.enums.SysConfigEnum;
-import com.flink.streaming.web.enums.SysErrorEnum;
-import com.flink.streaming.web.enums.YN;
+import com.flink.streaming.web.enums.*;
 import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.factory.JobServerAOFactory;
 import com.flink.streaming.web.model.dto.JobConfigDTO;
@@ -32,18 +27,7 @@ import com.flink.streaming.web.model.param.UpsertJobConfigParam;
 import com.flink.streaming.web.model.vo.DeployFlinkVO;
 import com.flink.streaming.web.model.vo.DeployFlinkVO.FlinkTask;
 import com.flink.streaming.web.model.vo.PageVO;
-import com.flink.streaming.web.service.JobAlarmConfigService;
-import com.flink.streaming.web.service.JobConfigHistoryService;
-import com.flink.streaming.web.service.JobConfigService;
-import com.flink.streaming.web.service.SavepointBackupService;
-import com.flink.streaming.web.service.SystemConfigService;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.flink.streaming.web.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +38,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zhuhuipei
@@ -463,7 +455,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     // jar需要校验参数
-    if (JobTypeEnum.JAR.equals(upsertJobConfigParam.getJobType())) {
+    if (JobTypeEnum.JAR.getCode() == upsertJobConfigParam.getJobType().intValue()) {
 
       if (StringUtils.isEmpty(upsertJobConfigParam.getCustomMainClass())) {
         return RestResult.error("主类不能为空");

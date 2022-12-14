@@ -26,241 +26,241 @@ import java.util.List;
 @Data
 public class JobConfigDTO implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private Long id;
+    private Long id;
 
-  /**
-   * 任务名称
-   */
-  private String jobName;
+    /**
+     * 任务名称
+     */
+    private String jobName;
 
-  /**
-   * 任务描述
-   */
-  private String jobDesc;
+    /**
+     * 任务描述
+     */
+    private String jobDesc;
 
-  /**
-   * flink的模式
-   */
-  private DeployModeEnum deployModeEnum;
+    /**
+     * flink的模式
+     */
+    private DeployModeEnum deployModeEnum;
 
-  /**
-   * flink运行配置
-   */
-  private String flinkRunConfig;
+    /**
+     * flink运行配置
+     */
+    private String flinkRunConfig;
 
-  /**
-   * checkpointConfig 配置
-   */
-  private String flinkCheckpointConfig;
+    /**
+     * checkpointConfig 配置
+     */
+    private String flinkCheckpointConfig;
 
-  /**
-   * flink运行配置
-   */
-  private String jobId;
+    /**
+     * flink运行配置
+     */
+    private String jobId;
 
-  /**
-   * 1:开启 0: 关闭
-   */
-  private Integer isOpen;
+    /**
+     * 1:开启 0: 关闭
+     */
+    private Integer isOpen;
 
-  /**
-   * @see JobConfigStatus 1:运行中 0: 停止中 -1:运行失败
-   */
-  private JobConfigStatus status;
-
-
-  /**
-   * 三方jar udf、 连接器 等jar如http://xxx.xxx.com/flink-streaming-udf.jar
-   */
-  private String extJarPath;
-
-  /**
-   * 最后一次启动时间
-   */
-  private Date lastStartTime;
-
-  /**
-   * 更新版本号 用于乐观锁
-   */
-  private Integer version;
-
-  /**
-   * sql语句
-   */
-  private String flinkSql;
+    /**
+     * @see JobConfigStatus 1:运行中 0: 停止中 -1:运行失败
+     */
+    private JobConfigStatus status;
 
 
-  /**
-   * 任务类型
-   */
-  private JobTypeEnum jobTypeEnum;
+    /**
+     * 三方jar udf、 连接器 等jar如http://xxx.xxx.com/flink-streaming-udf.jar
+     */
+    private String extJarPath;
 
-  /**
-   * 启动jar可能需要使用的自定义参数
-   */
-  private String customArgs;
+    /**
+     * 最后一次启动时间
+     */
+    private Date lastStartTime;
 
-  /**
-   * 程序入口类
-   */
-  private String customMainClass;
+    /**
+     * 更新版本号 用于乐观锁
+     */
+    private Integer version;
 
-  /**
-   * 自定义jar的http地址 如:http://ccblog.cn/xx.jar
-   */
-  private String customJarUrl;
-
-  private List<Integer> alarmTypes;
-
-  private List<AlarmTypeEnum> alarmTypeEnumList;
-
-  private Long lastRunLogId;
+    /**
+     * sql语句
+     */
+    private String flinkSql;
 
 
-  /**
-   * 创建时间
-   */
-  private Date createTime;
+    /**
+     * 任务类型
+     */
+    private JobTypeEnum jobTypeEnum;
 
-  /**
-   * 修改时间
-   */
-  private Date editTime;
+    /**
+     * 启动jar可能需要使用的自定义参数
+     */
+    private String customArgs;
 
-  private String creator;
+    /**
+     * 程序入口类
+     */
+    private String customMainClass;
 
-  private String editor;
+    /**
+     * 自定义jar的http地址 如:http://ccblog.cn/xx.jar
+     */
+    private String customJarUrl;
 
-  private String flinkRunUrl;
+    private List<Integer> alarmTypes;
 
-  private String alarmStrs;
+    private List<AlarmTypeEnum> alarmTypeEnumList;
 
-  private Integer isDeleted;
-
-  private String downloadUrl;
-
-  /**
-   * cron表达式
-   */
-  private String cron;
+    private Long lastRunLogId;
 
 
-  public List<String> getExtJarPathUrl() {
-    if (extJarPath == null) {
-      return Collections.emptyList();
-    }
-    List<String> urlJarsList = Lists.newArrayList();
-    String[] urls = extJarPath.split(SystemConstant.LINE_FEED);
-    for (String url : urls) {
-      if (StringUtils.isEmpty(url)) {
-        continue;
-      }
-      if (MatcherUtils.isHttpsOrHttp(url)) {
-        urlJarsList.add(url.trim());
-      } else {
-        urlJarsList.add(downloadUrl + SystemConstant.VIRGULE  + url.trim());
-      }
-    }
-    return urlJarsList;
-  }
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-  public static JobConfig toEntity(JobConfigDTO jobConfigDTO) {
-    if (jobConfigDTO == null) {
-      return null;
-    }
-    JobConfig jobConfig = new JobConfig();
-    jobConfig.setId(jobConfigDTO.getId());
-    jobConfig.setJobName(jobConfigDTO.getJobName());
-    jobConfig.setJobDesc(jobConfigDTO.getJobDesc());
-    if (jobConfigDTO.getDeployModeEnum() != null) {
-      jobConfig.setDeployMode(jobConfigDTO.getDeployModeEnum().name());
-    }
-    jobConfig.setFlinkRunConfig(jobConfigDTO.getFlinkRunConfig());
-    jobConfig.setFlinkCheckpointConfig(jobConfigDTO.getFlinkCheckpointConfig());
-    jobConfig.setJobId(jobConfigDTO.getJobId());
-    jobConfig.setIsOpen(jobConfigDTO.getIsOpen());
-    jobConfig.setStatus(jobConfigDTO.getStatus().getCode());
-    jobConfig.setLastStartTime(jobConfigDTO.getLastStartTime());
-    jobConfig.setVersion(jobConfigDTO.getVersion());
-    jobConfig.setFlinkSql(jobConfigDTO.getFlinkSql());
-    jobConfig.setCreateTime(jobConfigDTO.getCreateTime());
-    jobConfig.setEditTime(jobConfigDTO.getEditTime());
-    jobConfig.setCreator(jobConfigDTO.getCreator());
-    jobConfig.setEditor(jobConfigDTO.getEditor());
-    jobConfig.setLastRunLogId(jobConfigDTO.getLastRunLogId());
-    jobConfig.setExtJarPath(jobConfigDTO.getExtJarPath());
-    jobConfig.setCron(jobConfigDTO.getCron());
+    /**
+     * 修改时间
+     */
+    private Date editTime;
 
-    if (jobConfigDTO.getJobTypeEnum() != null) {
-      jobConfig.setJobType(jobConfigDTO.getJobTypeEnum().getCode());
-    }
-    jobConfig.setCustomArgs(jobConfigDTO.getCustomArgs());
-    jobConfig.setCustomMainClass(jobConfigDTO.getCustomMainClass());
-    jobConfig.setCustomJarUrl(jobConfigDTO.getCustomJarUrl());
-    jobConfig.setIsDeleted(jobConfigDTO.getIsDeleted());
-    return jobConfig;
-  }
+    private String creator;
 
-  public static JobConfigDTO toDTO(JobConfig jobConfig) {
-    if (jobConfig == null) {
-      return null;
-    }
-    JobConfigDTO jobConfigDTO = new JobConfigDTO();
-    jobConfigDTO.setId(jobConfig.getId());
-    jobConfigDTO.setJobName(jobConfig.getJobName());
-    jobConfigDTO.setJobDesc(jobConfig.getJobDesc());
-    jobConfigDTO.setDeployModeEnum(DeployModeEnum.getModel(jobConfig.getDeployMode()));
-    jobConfigDTO.setFlinkRunConfig(jobConfig.getFlinkRunConfig());
-    jobConfigDTO.setFlinkCheckpointConfig(jobConfig.getFlinkCheckpointConfig());
-    jobConfigDTO.setJobId(jobConfig.getJobId());
-    jobConfigDTO.setIsOpen(jobConfig.getIsOpen());
-    jobConfigDTO.setStatus(JobConfigStatus.getJobConfigStatus(jobConfig.getStatus()));
-    jobConfigDTO.setLastStartTime(jobConfig.getLastStartTime());
-    jobConfigDTO.setVersion(jobConfig.getVersion());
-    jobConfigDTO.setCreateTime(jobConfig.getCreateTime());
-    jobConfigDTO.setEditTime(jobConfig.getEditTime());
-    jobConfigDTO.setCreator(jobConfig.getCreator());
-    jobConfigDTO.setEditor(jobConfig.getEditor());
-    jobConfigDTO.setFlinkSql(jobConfig.getFlinkSql());
-    jobConfigDTO.setLastRunLogId(jobConfig.getLastRunLogId());
-    jobConfigDTO.setExtJarPath(jobConfig.getExtJarPath());
-    jobConfigDTO.setCron(jobConfig.getCron());
-    jobConfigDTO.setJobTypeEnum(JobTypeEnum.getJobTypeEnum(jobConfig.getJobType()));
-    jobConfigDTO.setCustomArgs(jobConfig.getCustomArgs());
-    jobConfigDTO.setCustomMainClass(jobConfig.getCustomMainClass());
-    jobConfigDTO.setCustomJarUrl(jobConfig.getCustomJarUrl());
-    jobConfigDTO.setIsDeleted(jobConfig.getIsDeleted());
-    return jobConfigDTO;
-  }
+    private String editor;
 
-  public static List<JobConfigDTO> toListDTO(List<JobConfig> jobConfigList) {
-    if (CollectionUtils.isEmpty(jobConfigList)) {
-      return Collections.emptyList();
+    private String flinkRunUrl;
+
+    private String alarmStrs;
+
+    private Integer isDeleted;
+
+    private String downloadUrl;
+
+    /**
+     * cron表达式
+     */
+    private String cron;
+
+
+    public List<String> getExtJarPathUrl() {
+        if (extJarPath == null) {
+            return Collections.emptyList();
+        }
+        List<String> urlJarsList = Lists.newArrayList();
+        String[] urls = extJarPath.split(SystemConstant.LINE_FEED);
+        for (String url : urls) {
+            if (StringUtils.isEmpty(url)) {
+                continue;
+            }
+            if (MatcherUtils.isHttpsOrHttp(url)) {
+                urlJarsList.add(url.trim());
+            } else {
+                urlJarsList.add(downloadUrl + SystemConstant.VIRGULE + url.trim());
+            }
+        }
+        return urlJarsList;
     }
 
-    List<JobConfigDTO> jobConfigDTOList = new ArrayList<JobConfigDTO>();
+    public static JobConfig toEntity(JobConfigDTO jobConfigDTO) {
+        if (jobConfigDTO == null) {
+            return null;
+        }
+        JobConfig jobConfig = new JobConfig();
+        jobConfig.setId(jobConfigDTO.getId());
+        jobConfig.setJobName(jobConfigDTO.getJobName());
+        jobConfig.setJobDesc(jobConfigDTO.getJobDesc());
+        if (jobConfigDTO.getDeployModeEnum() != null) {
+            jobConfig.setDeployMode(jobConfigDTO.getDeployModeEnum().name());
+        }
+        jobConfig.setFlinkRunConfig(jobConfigDTO.getFlinkRunConfig());
+        jobConfig.setFlinkCheckpointConfig(jobConfigDTO.getFlinkCheckpointConfig());
+        jobConfig.setJobId(jobConfigDTO.getJobId());
+        jobConfig.setIsOpen(jobConfigDTO.getIsOpen());
+        jobConfig.setStatus(jobConfigDTO.getStatus().getCode());
+        jobConfig.setLastStartTime(jobConfigDTO.getLastStartTime());
+        jobConfig.setVersion(jobConfigDTO.getVersion());
+        jobConfig.setFlinkSql(jobConfigDTO.getFlinkSql());
+        jobConfig.setCreateTime(jobConfigDTO.getCreateTime());
+        jobConfig.setEditTime(jobConfigDTO.getEditTime());
+        jobConfig.setCreator(jobConfigDTO.getCreator());
+        jobConfig.setEditor(jobConfigDTO.getEditor());
+        jobConfig.setLastRunLogId(jobConfigDTO.getLastRunLogId());
+        jobConfig.setExtJarPath(jobConfigDTO.getExtJarPath());
+        jobConfig.setCron(jobConfigDTO.getCron());
 
-    for (JobConfig jobConfig : jobConfigList) {
-      jobConfigDTOList.add(toDTO(jobConfig));
+        if (jobConfigDTO.getJobTypeEnum() != null) {
+            jobConfig.setJobType(jobConfigDTO.getJobTypeEnum().getCode());
+        }
+        jobConfig.setCustomArgs(jobConfigDTO.getCustomArgs());
+        jobConfig.setCustomMainClass(jobConfigDTO.getCustomMainClass());
+        jobConfig.setCustomJarUrl(jobConfigDTO.getCustomJarUrl());
+        jobConfig.setIsDeleted(jobConfigDTO.getIsDeleted());
+        return jobConfig;
     }
 
-    return jobConfigDTOList;
-  }
+    public static JobConfigDTO toDTO(JobConfig jobConfig) {
+        if (jobConfig == null) {
+            return null;
+        }
+        JobConfigDTO jobConfigDTO = new JobConfigDTO();
+        jobConfigDTO.setId(jobConfig.getId());
+        jobConfigDTO.setJobName(jobConfig.getJobName());
+        jobConfigDTO.setJobDesc(jobConfig.getJobDesc());
+        jobConfigDTO.setDeployModeEnum(DeployModeEnum.getModel(jobConfig.getDeployMode()));
+        jobConfigDTO.setFlinkRunConfig(jobConfig.getFlinkRunConfig());
+        jobConfigDTO.setFlinkCheckpointConfig(jobConfig.getFlinkCheckpointConfig());
+        jobConfigDTO.setJobId(jobConfig.getJobId());
+        jobConfigDTO.setIsOpen(jobConfig.getIsOpen());
+        jobConfigDTO.setStatus(JobConfigStatus.getJobConfigStatus(jobConfig.getStatus()));
+        jobConfigDTO.setLastStartTime(jobConfig.getLastStartTime());
+        jobConfigDTO.setVersion(jobConfig.getVersion());
+        jobConfigDTO.setCreateTime(jobConfig.getCreateTime());
+        jobConfigDTO.setEditTime(jobConfig.getEditTime());
+        jobConfigDTO.setCreator(jobConfig.getCreator());
+        jobConfigDTO.setEditor(jobConfig.getEditor());
+        jobConfigDTO.setFlinkSql(jobConfig.getFlinkSql());
+        jobConfigDTO.setLastRunLogId(jobConfig.getLastRunLogId());
+        jobConfigDTO.setExtJarPath(jobConfig.getExtJarPath());
+        jobConfigDTO.setCron(jobConfig.getCron());
+        jobConfigDTO.setJobTypeEnum(JobTypeEnum.getJobTypeEnum(jobConfig.getJobType()));
+        jobConfigDTO.setCustomArgs(jobConfig.getCustomArgs());
+        jobConfigDTO.setCustomMainClass(jobConfig.getCustomMainClass());
+        jobConfigDTO.setCustomJarUrl(jobConfig.getCustomJarUrl());
+        jobConfigDTO.setIsDeleted(jobConfig.getIsDeleted());
+        return jobConfigDTO;
+    }
 
-  public static String buildRunName(String jobName) {
+    public static List<JobConfigDTO> toListDTO(List<JobConfig> jobConfigList) {
+        if (CollectionUtils.isEmpty(jobConfigList)) {
+            return Collections.emptyList();
+        }
 
-    return "flink@" + jobName;
-  }
+        List<JobConfigDTO> jobConfigDTOList = new ArrayList<JobConfigDTO>();
 
-  public static JobConfigDTO bulidStop(Long id) {
-    JobConfigDTO jobConfig = new JobConfigDTO();
-    jobConfig.setStatus(JobConfigStatus.STOP);
-    jobConfig.setEditor("sys_auto");
-    jobConfig.setId(id);
-    // jobConfig.setJobId("");
-    return jobConfig;
-  }
+        for (JobConfig jobConfig : jobConfigList) {
+            jobConfigDTOList.add(toDTO(jobConfig));
+        }
+
+        return jobConfigDTOList;
+    }
+
+    public static String buildRunName(String jobName) {
+
+        return "flink@" + jobName;
+    }
+
+    public static JobConfigDTO bulidStop(Long id) {
+        JobConfigDTO jobConfig = new JobConfigDTO();
+        jobConfig.setStatus(JobConfigStatus.STOP);
+        jobConfig.setEditor("sys_auto");
+        jobConfig.setId(id);
+        // jobConfig.setJobId("");
+        return jobConfig;
+    }
 
 }

@@ -19,13 +19,14 @@ import com.flink.streaming.web.mapper.SystemConfigMapper;
 import com.flink.streaming.web.model.dto.SystemConfigDTO;
 import com.flink.streaming.web.model.entity.SystemConfig;
 import com.flink.streaming.web.service.SystemConfigService;
-import java.net.URL;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+
+import java.net.URL;
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -167,12 +168,12 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
   @Override
   public String getUploadJarsPath() {
-    String path = this
-        .getSystemConfigByKey(SysConfigEnum.FLINK_STREAMING_PLATFORM_WEB_HOME.getKey());
+    String path = this.getSystemConfigByKey(SysConfigEnum.FLINK_STREAMING_PLATFORM_WEB_HOME.getKey());
     if (StringUtils.isEmpty(path)) {
       throw new BizException("请先去系统设置界面设置Flink管理平台目录(即flink_streaming_platform_web)");
     }
-    return path + SystemConstant.VIRGULE + SystemConstant.JAR_ROOT_PATH;
+//    return path + SystemConstant.VIRGULE + SystemConstant.JAR_ROOT_PATH;
+    return path + SystemConstant.JAR_ROOT_PATH;
   }
 
   @Override

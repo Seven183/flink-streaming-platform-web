@@ -63,24 +63,17 @@ public class JobRunParamDTO {
   }
 
   public static JobRunParamDTO buildJobRunParam(Map<String, String> systemConfigMap,
-      JobConfigDTO jobConfigDTO, String sqlPath, String sqlUrl) {
+                                                JobConfigDTO jobConfigDTO, String sqlPath, String sqlUrl) {
 
-    String flinkBinPath = SystemConstants
-        .buildFlinkBin(systemConfigMap.get(SysConfigEnum.FLINK_HOME.getKey()));
-
+    String flinkBinPath = SystemConstants.buildFlinkBin(systemConfigMap.get(SysConfigEnum.FLINK_HOME.getKey()));
     String flinkRunParam = jobConfigDTO.getFlinkRunConfig();
-
     String sysHome = systemConfigMap.get(SysConfigEnum.FLINK_STREAMING_PLATFORM_WEB_HOME.getKey());
-
-    JobRunParamDTO jobRunParamDTO = new JobRunParamDTO(
+    return new JobRunParamDTO(
         flinkBinPath,
         flinkRunParam,
         sqlPath,
         sysHome,
         jobConfigDTO.getFlinkCheckpointConfig(), sqlUrl
     );
-
-    return jobRunParamDTO;
-
   }
 }

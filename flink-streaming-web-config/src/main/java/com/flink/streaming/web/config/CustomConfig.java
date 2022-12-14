@@ -17,22 +17,22 @@ import org.springframework.context.annotation.Configuration;
 public class CustomConfig {
 
 
-  @Value("${server.port}")
-  private Integer webPort;
+    @Value("${server.port}")
+    private Integer webPort;
 
 
-  private String localUrl;
+    private String localUrl;
 
-  public String getHttpLocalUrl() {
-    return "http://127.0.0.1:" + webPort + SystemConstant.VIRGULE;
-  }
+    public String getHttpLocalUrl() {
+        return "http://127.0.0.1:" + webPort + SystemConstant.VIRGULE;
+    }
 
-  public String getUrlForDown() {
-    return String.format("http://%s:%s/download/", IpUtil.getInstance().getHostIp(), webPort);
-  }
+    public String getUrlForDown() {
+        return String.format("http://%s:%s/download/", IpUtil.getInstance().getHostIp(), webPort);
+    }
 
-  public String getUrlForReadLocal() {
-    return String.format("http://%s:%s/readLocal/", IpUtil.getInstance().getHostIp(), webPort);
-  }
+    public String getUrlForReadLocal() {
+        return String.format("http://%s:%s/readLocal/", IpUtil.getInstance().getHostIp(), webPort);
+    }
 
 }

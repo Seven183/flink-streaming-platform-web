@@ -29,7 +29,9 @@ public class SqlFileParser {
     StringBuilder stmt = new StringBuilder();
     for (String line : lineList) {
       //开头是 -- 的表示注释
-      if (line.trim().isEmpty() || line.startsWith(SystemConstant.COMMENT_SYMBOL) || trimStart(line).startsWith(SystemConstant.COMMENT_SYMBOL)) {
+      if (line.trim().isEmpty()
+              || line.startsWith(SystemConstant.COMMENT_SYMBOL)
+              || trimStart(line).startsWith(SystemConstant.COMMENT_SYMBOL)) {
         continue;
       }
       stmt.append(SystemConstant.LINE_FEED).append(line);

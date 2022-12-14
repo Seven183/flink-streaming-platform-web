@@ -38,7 +38,8 @@ public class FsCheckPoint {
         CheckpointConfig checkpointConfig = env.getCheckpointConfig();
 
         //开始一致性模式是：精确一次 exactly-once
-        if (StringUtils.isEmpty(checkPointParam.getCheckpointingMode()) || CheckpointingMode.EXACTLY_ONCE.name().equalsIgnoreCase(checkPointParam.getCheckpointingMode())) {
+        if (StringUtils.isEmpty(checkPointParam.getCheckpointingMode())
+                || CheckpointingMode.EXACTLY_ONCE.name().equalsIgnoreCase(checkPointParam.getCheckpointingMode())) {
             checkpointConfig.setCheckpointingMode(CheckpointingMode.EXACTLY_ONCE);
             log.info("本次CheckpointingMode模式 精确一次 即exactly-once");
         } else {
@@ -61,10 +62,13 @@ public class FsCheckPoint {
 
         //检查点在作业取消后的保留策略，DELETE_ON_CANCELLATION代表删除，RETAIN_ON_CANCELLATION代表保留
         if (checkPointParam.getExternalizedCheckpointCleanup() != null) {
-            if (checkPointParam.getExternalizedCheckpointCleanup().equalsIgnoreCase(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION.name())) {
-                checkpointConfig.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
+            if (checkPointParam.getExternalizedCheckpointCleanup()
+                    .equalsIgnoreCase(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION.name())) {
+                checkpointConfig
+                        .enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.DELETE_ON_CANCELLATION);
                 log.info("本次使用DELETE_ON_CANCELLATION代表删除");
-            } else if (checkPointParam.getExternalizedCheckpointCleanup().equalsIgnoreCase(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION.name())) {
+            } else if (checkPointParam.getExternalizedCheckpointCleanup()
+                    .equalsIgnoreCase(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION.name())) {
                 checkpointConfig.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION);
                 log.info("本次使用RETAIN_ON_CANCELLATION代表保留");
             }
@@ -89,7 +93,8 @@ public class FsCheckPoint {
             case ROCKSDB:
                 log.info("开启ROCKSDB模式");
                 if (checkPointParam.getEnableIncremental() != null) {
-                    env.setStateBackend(new RocksDBStateBackend(checkPointParam.getCheckpointDir(), checkPointParam.getEnableIncremental()));
+                    env.setStateBackend(new RocksDBStateBackend(checkPointParam.getCheckpointDir(),
+                            checkPointParam.getEnableIncremental()));
                 } else {
                     env.setStateBackend(new RocksDBStateBackend(checkPointParam.getCheckpointDir()));
                 }
