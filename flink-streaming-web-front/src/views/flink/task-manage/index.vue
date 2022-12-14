@@ -4,7 +4,7 @@
       <!-- 查询与新增 -->
       <el-form ref="queryform" :model="queryform" :inline="true">
         <el-form-item>
-          <el-input v-model="queryform.jobId" placeholder="Flink任务Id" class="wl-input" @input="handleQuery()" />
+          <el-input v-model="queryform.jobId" placeholder="Flink任务Id" class="wl-input" clearable @input="handleQuery()" />
         </el-form-item>
         <el-form-item>
           <el-select v-model="queryform.jobType" placeholder="任务类型" clearable @change="handleQuery()">
@@ -273,7 +273,7 @@ export default {
           this.loading = true
           openTask(id).then(response => {
             this.loading = false
-            const { code, success, message, data } = response
+            const { code, success, message } = response
             if (code !== '200' || !success) {
               row.isOpen = (callback === 1) ? 0 : 1
               this.$message({ type: 'error', message: (message || '请求数据异常！') })
@@ -290,7 +290,7 @@ export default {
           this.loading = true
           closeTask(id).then(response => {
             this.loading = false
-            const { code, success, message, data } = response
+            const { code, success, message } = response
             if (code !== '200' || !success) {
               row.isOpen = (callback === 1) ? 0 : 1
               this.$message({ type: 'error', message: (message || '请求数据异常！') })
@@ -314,7 +314,7 @@ export default {
       const { id, jobName } = row
       startTask(id).then(response => {
         this.loading = false
-        const { code, success, message, data } = response
+        const { code, success, message } = response
         if (code !== '200' || !success) {
           this.$message({ type: 'error', message: (message || '请求数据异常！') })
           return
@@ -337,7 +337,7 @@ export default {
         this.loading = true
         stopTask(id).then(response => {
           this.loading = false
-          const { code, success, message, data } = response
+          const { code, success, message } = response
           if (code !== '200' || !success) {
             this.$message({ type: 'error', message: (message || '请求数据异常！') })
             return
@@ -361,7 +361,7 @@ export default {
         this.loading = true
         savePoint(id).then(response => {
           this.loading = false
-          const { code, success, message, data } = response
+          const { code, success, message } = response
           if (code !== '200' || !success) {
             this.$message({ type: 'error', message: (message || '请求数据异常！') })
             return
@@ -379,7 +379,7 @@ export default {
       this.loading = true
       copyConfig(id).then(response => {
         this.loading = false
-        const { code, success, message, data } = response
+        const { code, success, message } = response
         if (code !== '200' || !success) {
           this.$message({ type: 'error', message: (message || '请求数据异常！') })
           return
@@ -402,7 +402,7 @@ export default {
         this.loading = true
         deleteTask(id).then(response => {
           this.loading = false
-          const { code, success, message, data } = response
+          const { code, success, message } = response
           if (code !== '200' || !success) {
             this.$message({ type: 'error', message: (message || '请求数据异常！') })
             return

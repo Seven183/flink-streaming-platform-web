@@ -11,6 +11,7 @@ import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
+import { flinkRouter } from '@/router/modules/flink'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -91,7 +92,7 @@ export const constantRoutes = [
       {
         path: 'index',
         name: 'FlinkTaskManage',
-        component: () => import('@/views/flink/task-manage/index'),
+        component: () => import('@/views/flink/task-manage/index')
       }
     ]
   },
@@ -203,6 +204,7 @@ export const asyncRoutes = [
   chartsRouter,
   nestedRouter,
   tableRouter,
+  flinkRouter,
 
   {
     path: '/example',

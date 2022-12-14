@@ -175,25 +175,13 @@ export const flinkRouter = [
     ]
   },
   {
-    path: '/flink/user',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'UserManage',
-        meta: { title: '用户管理', icon: 'el-icon-user' },
-        component: () => import('@/views/flink/user-manage')
-      }
-    ]
-  },
-  {
     path: '/flink/jarManage',
     component: Layout,
     children: [
       {
         path: 'index',
         name: 'jarManage',
-        meta: { title: '三方jar管理', icon: 'el-icon-upload' },
+        meta: { title: 'JAR管理', icon: 'el-icon-upload' },
         component: () => import('@/views/flink/upload')
       }
     ]
@@ -211,8 +199,21 @@ export const flinkRouter = [
     ]
   },
   {
+    path: '/flink/user',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'UserManage',
+        meta: { title: '用户管理', icon: 'el-icon-user' },
+        component: () => import('@/views/flink/user-manage')
+      }
+    ]
+  },
+  {
     path: '/flink/system-contact',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',

@@ -7,10 +7,10 @@
       <!-- 查询 -->
       <el-form ref="queryform" :model="queryform" :inline="true">
         <el-form-item>
-          <el-input v-model="queryform.jobConfigId" placeholder="任务编号" class="wl-input" @input="handleQuery()" />
+          <el-input v-model="queryform.jobConfigId" placeholder="任务编号" class="wl-input" clearable @input="handleQuery()" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="queryform.jobName" placeholder="任务名称(模糊查询)" class="wl-input" @input="handleQuery()">
+          <el-input v-model="queryform.jobName" placeholder="任务名称(模糊查询)" class="wl-input" clearable @input="handleQuery()">
             <el-button slot="append" type="primary" icon="el-icon-search" class="wl-search" @click="handleQuery()" />
           </el-input>
         </el-form-item>
