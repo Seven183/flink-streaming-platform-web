@@ -99,6 +99,7 @@ export const flinkRouter = [
       {
         path: '/flink/task-manage/history',
         name: 'HistoryTask',
+        hidden: true,
         component: (resolve) => require([`@/views/flink/task-manage/history.vue`], resolve),
         meta: { title: '历史版本', icon: 'el-icon-tickets' },
         children: [
