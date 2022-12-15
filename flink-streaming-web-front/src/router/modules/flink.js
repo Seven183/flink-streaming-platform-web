@@ -135,6 +135,7 @@ export const flinkRouter = [
     path: '/flink/log-manage',
     name: 'LogManage',
     component: Layout,
+    hidden: true,
     children: [
       {
         path: 'index',
