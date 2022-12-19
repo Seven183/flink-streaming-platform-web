@@ -241,6 +241,7 @@ public class SystemConfigServiceImpl implements SystemConfigService {
 
   private void checkUrlValid(SysConfigEnum sysConfigEnum, String url) {
     switch (sysConfigEnum) {
+      case ENTERPRISEWECHAT_ALARM_URL:
       case FLINK_REST_HTTP_ADDRESS:
       case DINGDING_ALARM_URL:
         if (!HttpServiceCheckerUtil.checkUrlConnect(url)) {

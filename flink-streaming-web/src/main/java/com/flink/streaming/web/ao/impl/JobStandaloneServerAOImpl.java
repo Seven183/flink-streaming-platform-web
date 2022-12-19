@@ -1,10 +1,14 @@
 package com.flink.streaming.web.ao.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.flink.streaming.common.enums.JobTypeEnum;
 import com.flink.streaming.web.ao.JobBaseServiceAO;
 import com.flink.streaming.web.ao.JobServerAO;
+import com.flink.streaming.web.common.FlinkStandaloneRestUriConstants;
 import com.flink.streaming.web.common.MessageConstants;
 import com.flink.streaming.web.common.SystemConstants;
+import com.flink.streaming.web.common.util.HttpUtil;
 import com.flink.streaming.web.enums.*;
 import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.model.dto.JobConfigDTO;
@@ -16,6 +20,7 @@ import com.flink.streaming.web.rpc.FlinkRestRpcAdapter;
 import com.flink.streaming.web.rpc.model.JobStandaloneInfo;
 import com.flink.streaming.web.service.JobConfigService;
 import com.flink.streaming.web.service.SavepointBackupService;
+import com.flink.streaming.web.service.SystemConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +58,9 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
 
     @Autowired
     private BatchJobManagerScheduler batchJobRegister;
+
+    @Autowired
+    private SystemConfigService systemConfigService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -143,9 +151,19 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
 
         //1、 执行savepoint
         try {
-            //yarn模式下和集群模式下统一目录是hdfs:///flink/savepoint/flink-streaming-platform-web/
-            //LOCAL模式本地模式下保存在flink根目录下
             String targetDirectory = SystemConstants.DEFAULT_SAVEPOINT_ROOT_PATH + id;
+            String flinkHttpAddress = systemConfigService.getFlinkHttpAddress(jobConfigDTO.getDeployModeEnum());
+            String uriJobsForStandalone = FlinkStandaloneRestUriConstants.getUriJobsForStandalone();
+            String url = HttpUtil.buildUrl(flinkHttpAddress, uriJobsForStandalone);
+            String res = HttpUtil.buildRestTemplate(HttpUtil.TIME_OUT_1_M).getForObject(url, String.class);
+
+            JSONArray objects = JSONArray.parseArray(res);
+            for (int i = 0; i <= objects.size() - 1; i++) {
+                JSONObject jsonObject = JSONObject.parseObject(objects.get(i).toString());
+                if (jsonObject.get("key").equals("state.savepoints.dir")) {
+                    targetDirectory = jsonObject.get("value").toString() + "/" + jobConfigDTO.getJobId();
+                }
+            }
             if (DeployModeEnum.LOCAL.equals(jobConfigDTO.getDeployModeEnum())) {
                 targetDirectory = "savepoint/" + id;
             }

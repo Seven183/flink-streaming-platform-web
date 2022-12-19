@@ -105,14 +105,14 @@ public class SchedulerTask {
 
 
   /**
-   * 每隔1小时进行一次自动savePoint
+   * 每隔30分钟进行一次自动savePoint
    *
    * @author zhuhuipei
    * @date 2020-09-22
    * @time 23:45
    */
   @Async("taskExecutor")
-  @Scheduled(cron = "0 0 */1 * * ?")
+  @Scheduled(cron = "0 */30 * * * ?")
   //@Scheduled(cron = "0 */1 * * * ?")
   public void autoSavePoint() {
     if (!systemConfigService.autoSavepoint()) {

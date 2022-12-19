@@ -48,6 +48,9 @@ public enum SysConfigEnum {
       "钉钉告警所需的url（如果不填写将无法告警）",
       SysConfigEnumType.ALART.name()),
 
+  ENTERPRISEWECHAT_ALARM_URL("wechat_alart_url",
+          "企业微信告警所需的url（如果不填写将无法告警）",
+          SysConfigEnumType.ALART.name()),
 
   CALLBACK_ALARM_URL("callback_alart_url",
       "自定义http回调告警(只需填写url即可如:http://127.0.0.1/alarmCallback 地址必须是alarmCallback )",

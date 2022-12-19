@@ -76,6 +76,27 @@
             <el-input v-model="form.jobDesc" placeholder="请输入任务描述" />
           </el-form-item>
         </el-col>
+        <el-col :span="14">
+          <el-form-item label="状态保存" prop="flinkCheckpointConfig" label-width="100px">
+            <span slot="label">状态保存
+              <el-popover placement="bottom-start" trigger="hover">
+                不填默认不开启checkpoint机制，支持如下参数：<br>
+                checkpointInterval：整数，默认每60s保存一次checkpoint，单位毫秒<br>
+                checkpointingMode：EXACTLY_ONCE 或者 AT_LEAST_ONCE，一致性模式 默认EXACTLY_ONCE，单位字符<br>
+                checkpointTimeout：6000，默认超时10 minutes，单位毫秒<br>
+                checkpointDir：保存地址 如 hdfs://hcluster/flink/checkpoints/ 注意目录权限<br>
+                tolerableCheckpointFailureNumber：1，设置失败次数 默认一次<br>
+                asynchronousSnapshots：true 或者 false，是否异步<br>
+                externalizedCheckpointCleanup：DELETE_ON_CANCELLATION或者RETAIN_ON_CANCELLATION，作业取消后检查点是否删除（可不填）<br>
+                stateBackendType：0 或者 1 或者 2，默认1 后端状态 0:MemoryStateBackend 1: FsStateBackend 2:RocksDBStateBackend<br>
+                enableIncremental：true 或者 false，是否采用增量 只有在 stateBackendType 2模式下才有效果 即RocksDBStateBackend<br>
+                如： -stateBackendType 2 -enableIncremental true -checkpointInterval 900000 -checkpointDir hdfs:///flink/checkpoints/hearbeat_to_hive
+                <i slot="reference" class="el-icon-info" />
+              </el-popover>
+            </span>
+            <el-input v-model="form.flinkCheckpointConfig" placeholder="Checkpoint配置，如：-checkpointDir hdfs:///flink/checkpoint/" />
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row>
         <el-col :span="14">
@@ -162,6 +183,7 @@ export default {
         id: '',
         jobName: '',
         jobDesc: '',
+        flinkCheckpointConfig: 'rrrr',
         jobType: 1,
         deployModeEnum: '',
         flinkRunConfig: '',
@@ -193,6 +215,7 @@ export default {
     this.form.id = task.id ? task.id : ''
     this.form.jobName = task.jobName ? task.jobName : ''
     this.form.jobDesc = task.jobDesc ? task.jobDesc : ''
+    this.form.flinkCheckpointConfig = task.flinkCheckpointConfig ? task.flinkCheckpointConfig : ''
     this.form.jobType = task.jobTypeEnum ? this.getJobType(task.jobTypeEnum) : 0
     this.form.deployModeEnum = task.deployModeEnum ? task.deployModeEnum : ''
     this.form.flinkRunConfig = task.flinkRunConfig ? task.flinkRunConfig : ''
@@ -219,6 +242,7 @@ export default {
             id: this.form.id,
             jobName: this.form.jobName,
             jobDesc: this.form.jobDesc,
+            flinkCheckpointConfig: this.form.flinkCheckpointConfig,
             deployMode: this.form.deployModeEnum,
             flinkRunConfig: this.form.flinkRunConfig,
             jobType: this.form.jobType,
@@ -231,7 +255,7 @@ export default {
           if (!data.id && this.params.flag === 'create') {
             addConfig(data).then(response => {
               this.loading = false
-              const { code, data, success, message } = response
+              const { code, success, message } = response
               if (code !== '200' || !success) {
                 this.$message({ type: 'error', message: (message || '请求数据异常！') })
                 return
@@ -246,7 +270,7 @@ export default {
           } else if (data.id && this.params.flag === 'update') {
             editConfig(data).then(response => {
               this.loading = false
-              const { code, data, success, message } = response
+              const { code, success, message } = response
               if (code !== '200' || !success) {
                 this.$message({ type: 'error', message: (message || '请求数据异常！') })
                 return

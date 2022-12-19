@@ -11,10 +11,7 @@ import com.flink.streaming.web.service.SystemConfigService;
 import com.flink.streaming.web.service.UploadFileService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -37,7 +34,7 @@ public class UploadApiController extends BaseController {
   private SystemConfigService systemConfigService;
 
 
-  @RequestMapping(value = "/upload", method = RequestMethod.POST, consumes = "multipart/form-data")
+  @PostMapping(value = "/upload", consumes = "multipart/form-data")
   public RestResult<?> upload(@RequestPart MultipartFile file) {
     try {
       String uploadPath = systemConfigService.getUploadJarsPath();

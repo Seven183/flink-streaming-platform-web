@@ -71,9 +71,6 @@ public class SavepointApiController {
 
   /**
    * 获取SavePoint保存历史信息
-   *
-   * @param modelMap
-   * @param jobConfigId
    * @return
    * @author wxj
    * @date 2021年12月3日 上午10:01:42

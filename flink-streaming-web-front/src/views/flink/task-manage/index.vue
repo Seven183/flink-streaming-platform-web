@@ -84,13 +84,13 @@
             <el-tag v-else type="info" size="mini">{{ getStatusDesc(scope.row.status) }}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="deployModeEnum" :show-overflow-tooltip="true" label="运行模式" width="105" align="center" />
+        <el-table-column prop="deployModeEnum" :show-overflow-tooltip="true" label="运行模式" width="110" align="center" />
         <el-table-column prop="jobId" :show-overflow-tooltip="true" label="Flink任务Id" min-width="100" align="center">
           <template slot-scope="scope">
             <el-link v-if="scope.row.jobId" :href="scope.row.flinkRunUrl" target="_blank">{{ scope.row.jobId }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column label="日志" width="115" align="center">
+        <el-table-column label="日志" width="140" align="center">
           <template slot-scope="scope">
             <router-link v-if="scope.row.lastRunLogId!==null" :to="{name:'ViewTaskLogDetail', params:{flag:'tasklist', context:queryContent(), data:{id:scope.row.lastRunLogId}}}">
               <el-link type="info" icon="el-icon-message">详情</el-link>
@@ -125,8 +125,10 @@
         </el-table-column>
         <el-table-column prop="savepoint" label="保存状态(savepoint)" width="135px" fixed="right">
           <template slot-scope="scope">
-            <el-link v-if="scope.row.jobTypeEnum==='SQL_STREAMING'" type="primary" icon="el-icon-sell" @click.native="doRecoverSavePoint(scope.row)">恢复</el-link>
-            <el-link v-if="scope.row.jobTypeEnum==='SQL_STREAMING'" type="success" icon="el-icon-sold-out" @click.native="savePoint(scope.row)">备份</el-link>
+            <!--            <el-link v-if="scope.row.jobTypeEnum==='SQL_STREAMING'" type="primary" icon="el-icon-sell" @click.native="doRecoverSavePoint(scope.row)">恢复</el-link>-->
+            <!--            <el-link v-if="scope.row.jobTypeEnum==='SQL_STREAMING'" type="success" icon="el-icon-sold-out" @click.native="savePoint(scope.row)">备份</el-link>-->
+            <el-link type="primary" icon="el-icon-sell" @click.native="doRecoverSavePoint(scope.row)">恢复</el-link>
+            <el-link type="success" icon="el-icon-sold-out" @click.native="savePoint(scope.row)">备份</el-link>
           </template>
         </el-table-column>
         <el-table-column prop="operate" label="操作" width="210" fixed="right">

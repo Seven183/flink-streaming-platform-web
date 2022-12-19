@@ -5,7 +5,9 @@ import com.flink.streaming.web.common.RestResult;
 import com.flink.streaming.web.controller.web.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Slf4j
-public class ApiController extends BaseController {
+public class AlarmCallbackController extends BaseController {
 
   @Autowired
   private JobServerAO jobYarnServerAO;
@@ -26,8 +28,8 @@ public class ApiController extends BaseController {
     return RestResult.success();
   }
 
-  @RequestMapping("/alarmCallback")
-  public RestResult alarmCallback(String appId, String jobName, String deployMode) {
+  @PostMapping("/alarmCallback")
+  public RestResult alarmCallback(@RequestParam String appId, @RequestParam String jobName, @RequestParam String deployMode) {
     log.info("测试回调 appId={} jobName={} deployMode={}", appId, jobName, deployMode);
     return RestResult.success();
   }

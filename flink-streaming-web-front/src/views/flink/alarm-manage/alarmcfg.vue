@@ -1,6 +1,20 @@
 <template>
   <div v-loading="loading" class="tab-container" size="mini">
-    <el-form ref="form" :model="form" label-width="100px">
+    <el-form ref="form" :model="form" label-width="150px">
+      <el-form-item inline="true">
+        <span slot="label">企业微信告警
+          <el-popover placement="right" trigger="hover">
+            <p>企业微信告警所需的url（如果不填写将无法告警）</p>
+            <p>1、目前暂时企业微信群告警且只能添加一个 （当运行的任务挂掉的时候会告警）</p>
+            <p>2、部署的机器需要支持外网否则无法支持企业微信发送</p>
+            <i slot="reference" class="el-icon-info" />
+          </el-popover>
+        </span>
+        <el-input v-model="form.wechat_alart_url" placeholder="钉钉告警所需的url" class="fl-form-item" />
+        <el-button type="primary" @click="updateConfig('wechat_alart_url', form.wechat_alart_url)">提交</el-button>
+        <el-button type="danger" @click="deleteConfig('wechat_alart_url')">删除</el-button>
+        <el-button type="success" @click="testalarm('/testEnterpriseWeChatAlert')">测试一下</el-button>
+      </el-form-item>
       <el-form-item inline="true">
         <span slot="label">钉钉告警
           <el-popover placement="right" trigger="hover">
@@ -34,7 +48,7 @@
 </template>
 
 <script>
-import { alartConfig, upsertSynConfig, deleteConfig,test_alarm } from '@/api/config'
+import { alartConfig, upsertSynConfig, deleteConfig, test_alarm } from '@/api/config'
 
 export default {
   name: 'AlarmCfg',
@@ -42,6 +56,7 @@ export default {
     return {
       loading: false,
       form: {
+        wechat_alart_url: '',
         dingding_alart_url: '',
         callback_alart_url: ''
       }
@@ -60,6 +75,7 @@ export default {
           this.$message({ type: 'error', message: (message || '请求数据异常！') })
           return
         }
+        this.form.wechat_alart_url = ''
         this.form.dingding_alart_url = ''
         this.form.callback_alart_url = ''
         data.forEach((item) => {
@@ -67,6 +83,8 @@ export default {
             this.form.dingding_alart_url = item.val
           } else if (item.key === 'callback_alart_url') {
             this.form.callback_alart_url = item.val
+          } else if (item.key === 'wechat_alart_url') {
+            this.form.wechat_alart_url = item.val
           }
         })
       }).catch(error => {
@@ -79,7 +97,7 @@ export default {
       this.loading = true
       upsertSynConfig(key, value).then(response => {
         this.loading = false
-        const { code, success, message, data } = response
+        const { code, success, message } = response
         if (code !== '200' || !success) {
           this.$message({ type: 'error', message: (message || '请求数据异常！') })
           return
@@ -96,7 +114,7 @@ export default {
     testalarm(url) { // 测试一下
       console.log(url)
       test_alarm(url).then(response => {
-        const { code, success, message, data } = response
+        const { code, success, message } = response
         if (code !== '200' || !success) {
           this.$message({ type: 'error', message: (message || '测试数据异常！') })
           return
@@ -115,6 +133,8 @@ export default {
         keyname = '钉钉告警通知配置'
       } else if (key === 'callback_alart_url') {
         keyname = '自定义告警通知配置'
+      } else if (key === 'wechat_alart_url') {
+        keyname = '企业微信告警通知配置'
       }
       this.$confirm(`是否删除${keyname}`, '提示', {
         confirmButtonText: '确定',
@@ -124,7 +144,7 @@ export default {
         this.loading = true
         deleteConfig(key).then(response => {
           this.loading = false
-          const { code, success, message, data } = response
+          const { code, success, message } = response
           if (code !== '200' || !success) {
             this.$message({ type: 'error', message: (message || '请求数据异常！') })
             return

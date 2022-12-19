@@ -15,14 +15,13 @@ import com.flink.streaming.web.model.vo.SystemConfigVO;
 import com.flink.streaming.web.service.AlartLogService;
 import com.flink.streaming.web.service.SystemConfigService;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -45,16 +44,6 @@ public class AlartApiController extends BaseController {
   @Autowired
   private AlartLogService alartLogService;
 
-  /**
-   * 查询告警日志列表
-   *
-   * @param modelMap
-   * @param alartLogParam
-   * @return
-   * @author wxj
-   * @date 2021年12月16日 下午4:11:09
-   * @version V1.0
-   */
   @RequestMapping(value = "/alartLogList")
   public RestResult<?> queryAlartLogList(ModelMap modelMap, AlartLogParam alartLogParam) {
     if (alartLogParam == null) {
@@ -70,15 +59,6 @@ public class AlartApiController extends BaseController {
     return RestResult.success(pageVO);
   }
 
-  /**
-   * 查询告警配置
-   *
-   * @param modelMap
-   * @return
-   * @author wxj
-   * @date 2021年12月16日 下午4:11:48
-   * @version V1.0
-   */
   @RequestMapping(value = "/alartConfig")
   public RestResult<?> alartConfig(ModelMap modelMap) {
     List<SystemConfigVO> list = SystemConfigVO
@@ -86,13 +66,6 @@ public class AlartApiController extends BaseController {
     return RestResult.success(list);
   }
 
-  /**
-   * 测试钉钉功能是否正常
-   *
-   * @author zhuhuipei
-   * @date 2020-09-28
-   * @time 19:25
-   */
   @RequestMapping("/testDingdingAlert")
   public RestResult testDingdingAlert() {
     try {
@@ -113,14 +86,6 @@ public class AlartApiController extends BaseController {
     return RestResult.error("钉钉告警测试失败");
   }
 
-
-  /**
-   * 测试url回调告警
-   *
-   * @author zhuhuipei
-   * @date 2021/2/21
-   * @time 15:05
-   */
   @RequestMapping("/testHttpAlert")
   public RestResult testHttpAlert() {
     try {
@@ -143,17 +108,30 @@ public class AlartApiController extends BaseController {
       log.error("testHttpAlert is fail", e);
     }
 
-    return RestResult.error("钉钉告警测试失败");
+    return RestResult.error("自定义回调测试失败");
   }
 
+  @RequestMapping("/testEnterpriseWeChatAlert")
+  public RestResult testEnterpriseWeChatAlert() {
+    try {
+      String weChatUrl = systemConfigService
+              .getSystemConfigByKey(SysConfigEnum.ENTERPRISEWECHAT_ALARM_URL.getKey());
+      if (StringUtils.isEmpty(weChatUrl)) {
+        return RestResult.error("EnterpriseWeChatURL地址不存在");
+      }
+//      boolean isSuccess = alarmServiceAO.sendForHttp(callbackUrl, callbackDTO);
 
-  /**
-   * 错误日志详情
-   *
-   * @author zhuhuipei
-   * @date 2020-09-28
-   * @time 19:25
-   */
+//      if (isSuccess) {
+//        return RestResult.success();
+//      }
+      return RestResult.error("测试失败fdf");
+    } catch (Exception e) {
+      log.error("testEnterpriseWeChatAlert is fail", e);
+    }
+
+    return RestResult.error("企业微信测试失败");
+  }
+
   @RequestMapping("/logErrorInfo")
   public RestResult logErrorInfo(Long id) {
     AlartLogDTO alartLogDTO = alartLogService.findLogById(id);
