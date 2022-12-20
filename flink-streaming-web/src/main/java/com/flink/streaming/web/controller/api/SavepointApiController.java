@@ -21,12 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2020-09-21
- * @time 01:52
- */
 @RestController
 @RequestMapping("/api")
 @Slf4j

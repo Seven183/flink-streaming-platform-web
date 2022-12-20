@@ -47,12 +47,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2020-07-07
- * @time 22:00
- */
 @RestController
 @RequestMapping("/api")
 @Slf4j
@@ -248,12 +242,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 查询作业列表
-     *
-     * @param jobConfigParam
-     * @return
-     * @author wxj
-     * @date 2021年12月1日 下午5:09:06
-     * @version V1.0
      */
     @PostMapping(value = "/listTask")
     public RestResult listTask(ModelMap modelMap, JobConfigParam jobConfigParam) {
@@ -273,13 +261,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 查询历史版本
-     *
-     * @param modelMap
-     * @param jobConfigParam
-     * @return
-     * @author wxj
-     * @date 2021年12月20日 上午11:07:22
-     * @version V1.0
      */
     @RequestMapping(value = "/jobConfigHistoryPage")
     public RestResult<?> listPage(ModelMap modelMap, JobConfigHisotryParam jobConfigParam) {
@@ -296,13 +277,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 查询历史版本详情
-     *
-     * @param modelMap
-     * @param id
-     * @return
-     * @author wxj
-     * @date 2021年12月20日 下午2:13:50
-     * @version V1.0
      */
     @RequestMapping("/jobConfigHistoryDetail")
     public RestResult<?> detailPage(ModelMap modelMap, Long id) {
@@ -512,10 +486,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 获取JobServerAO
-     *
-     * @author zhuhuipei
-     * @date 2020/11/4
-     * @time 11:19
      */
     private JobServerAO getJobServerAO(Long id) {
         JobConfigDTO jobConfigDTO = jobConfigService.getJobConfigById(id);
@@ -551,10 +521,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 补充字段信息
-     *
-     * @author wxj
-     * @date 2021年12月21日 下午5:01:47
-     * @version V1.0
      */
     private void completeJObConfigDTO(JobConfigDTO jobConfigDTO) {
         Map<DeployModeEnum, String> domainKey = new HashMap<>();
@@ -625,11 +591,6 @@ public class JobConfigApiController extends BaseController {
 
     /**
      * 补充字段信息
-     *
-     * @param pageModel
-     * @author wxj
-     * @date 2021年12月21日 下午5:01:47
-     * @version V1.0
      */
     private void completeJObConfigDTO(PageModel<JobConfigDTO> pageModel) {
         if (pageModel == null || pageModel.size() == 0) {

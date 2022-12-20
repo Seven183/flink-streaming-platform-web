@@ -21,43 +21,43 @@ import java.util.List;
 public class SysConfigApiController extends BaseController {
 
 
-  @Autowired
-  private SystemConfigService systemConfigService;
+    @Autowired
+    private SystemConfigService systemConfigService;
 
-  @PostMapping(value = "/upsertSynConfig")
-  public RestResult<?> upsertSynConfig(String key, String val) {
-    try {
-      systemConfigService.addOrUpdateConfigByKey(key, val.trim());
-    } catch (BizException biz) {
-      log.warn("upsertSynConfig is error ", biz);
-      return RestResult.error(biz.getMessage());
-    } catch (Exception e) {
-      log.error("upsertSynConfig is error", e);
-      return RestResult.error(e.getMessage());
+    @PostMapping(value = "/upsertSynConfig")
+    public RestResult<?> upsertSynConfig(String key, String val) {
+        try {
+            systemConfigService.addOrUpdateConfigByKey(key, val.trim());
+        } catch (BizException biz) {
+            log.warn("upsertSynConfig is error ", biz);
+            return RestResult.error(biz.getMessage());
+        } catch (Exception e) {
+            log.error("upsertSynConfig is error", e);
+            return RestResult.error(e.getMessage());
+        }
+        return RestResult.success();
     }
-    return RestResult.success();
-  }
 
 
-  @PostMapping(value = "/deleteConfig")
-  public RestResult<?> deleteConfig(String key) {
-    try {
-      systemConfigService.deleteConfigByKey(key);
-    } catch (BizException biz) {
-      log.warn("upsertSynConfig is error ", biz);
-      return RestResult.error(biz.getMessage());
-    } catch (Exception e) {
-      log.error("upsertSynConfig is error", e);
-      return RestResult.error(e.getMessage());
+    @PostMapping(value = "/deleteConfig")
+    public RestResult<?> deleteConfig(String key) {
+        try {
+            systemConfigService.deleteConfigByKey(key);
+        } catch (BizException biz) {
+            log.warn("upsertSynConfig is error ", biz);
+            return RestResult.error(biz.getMessage());
+        } catch (Exception e) {
+            log.error("upsertSynConfig is error", e);
+            return RestResult.error(e.getMessage());
+        }
+        return RestResult.success();
     }
-    return RestResult.success();
-  }
 
-  @RequestMapping(value = "/sysConfig")
-  public RestResult<?> sysConfig(ModelMap modelMap) {
-    List<SystemConfigVO> list = SystemConfigVO
-        .toListVO(systemConfigService.getSystemConfig(SysConfigEnumType.SYS));
-    return RestResult.success(list);
-  }
+    @RequestMapping(value = "/sysConfig")
+    public RestResult<?> sysConfig(ModelMap modelMap) {
+        List<SystemConfigVO> list = SystemConfigVO
+                .toListVO(systemConfigService.getSystemConfig(SysConfigEnumType.SYS));
+        return RestResult.success(list);
+    }
 
 }

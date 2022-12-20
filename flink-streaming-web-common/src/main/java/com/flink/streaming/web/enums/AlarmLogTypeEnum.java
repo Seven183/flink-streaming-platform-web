@@ -13,7 +13,8 @@ public enum AlarmLogTypeEnum {
 
   DINGDING(1, "钉钉"),
   CALLBACK_URL(2, "自定义回调http"),
-  OTHER(3, "其他");
+  WECHAT_URL(3, "企业微信"),
+  OTHER(4, "其他");
 
   private int code;
 

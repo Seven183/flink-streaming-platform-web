@@ -3,12 +3,22 @@
     <!-- 查询 -->
     <el-form ref="queryform" :model="queryform" :inline="true">
       <el-form-item>
-        <el-input v-model="queryform.jobConfigId" placeholder="任务Id" class="wl-input" @input="handleQuery()" />
+        <el-input v-model="queryform.jobConfigId" placeholder="任务Id" clearable class="wl-input" @input="handleQuery()" />
+      </el-form-item>
+      <el-form-item>
+        <el-input v-model="queryform.jobName" placeholder="任务名称" clearable class="wl-input" @input="handleQuery()" />
       </el-form-item>
       <el-form-item>
         <el-select v-model="queryform.status" placeholder="选择状态" clearable @change="handleQuery()">
           <el-option label="成功" value="1" />
           <el-option label="失败" value="0" />
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select v-model="queryform.type" placeholder="告警类型" clearable @change="handleQuery()">
+          <el-option label="钉钉" value="1" />
+          <el-option label="回调" value="2" />
+          <el-option label="企业微信" value="3" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -83,7 +93,9 @@ export default {
       failLog: '',
       queryform: {
         jobConfigId: '',
-        status: ''
+        jobName: '',
+        status: '',
+        type: ''
       },
       list: [],
       count: 0,
@@ -100,6 +112,8 @@ export default {
       this.pageSize = params.pageSize
       this.queryform.jobConfigId = params.jobConfigId
       this.queryform.status = params.status
+      this.queryform.type = params.type
+      this.queryform.jobName = params.jobName
     }
     this.handleQuery()
   },
@@ -119,8 +133,8 @@ export default {
     },
     getLogs() { // 查询日志列表
       this.loading = true
-      const { jobConfigId, status } = this.queryform
-      alartLogList(this.currentPage, this.pageSize, jobConfigId, status).then(response => {
+      const { jobConfigId, status, type, jobName } = this.queryform
+      alartLogList(this.currentPage, this.pageSize, jobConfigId, status, type, jobName).then(response => {
         this.loading = false
         const { code, success, message, data } = response
         if (code !== '200' || !success) {
@@ -172,6 +186,7 @@ export default {
       switch (type) {
         case 'DINGDING': return '钉钉'
         case 'CALLBACK_URL': return '自定义回调http'
+        case 'WECHAT_URL': return '企业微信'
         default: return ''
       }
     },

@@ -40,12 +40,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2021/3/28
- * @time 10:02
- */
 @Component
 @Slf4j
 public class JobBaseServiceAOImpl implements JobBaseServiceAO {
@@ -54,7 +48,6 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
 
     @Autowired
     private JobRunLogService jobRunLogService;
-
 
     @Autowired
     private YarnRestRpcAdapter yarnRestRpcAdapter;
@@ -109,12 +102,10 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
                 break;
             //TODO
             default:
-
         }
 
         Map<String, String> systemConfigMap = SystemConfigDTO.toMap(systemConfigService.getSystemConfig(SysConfigEnumType.SYS));
         this.checkSysConfig(systemConfigMap, jobConfigDTO.getDeployModeEnum());
-
 
     }
 
@@ -141,7 +132,6 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
             log.warn(MessageConstants.MESSAGE_005, jobConfigDTO.getJobName());
             throw new BizException(MessageConstants.MESSAGE_005);
         }
-
 
     }
 
@@ -269,12 +259,8 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
                 }
             }
 
-
             /**
              *下载文件到本地并且setMainJarPath
-             * @author zhuhuipei
-             * @date 2021/3/28
-             * @time 14:58
              */
             private void downJar(JobRunParamDTO jobRunParamDTO, JobConfigDTO jobConfigDTO) {
                 int code = JobTypeEnum.JAR.getCode();
@@ -302,9 +288,6 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
 
             /**
              *错误日志目录提示
-             * @author zhuhuipei
-             * @date 2020-10-19
-             * @time 21:47
              */
             private String errorInfoDir() {
                 StringBuilder errorTips = new StringBuilder(SystemConstant.LINE_FEED)
@@ -326,11 +309,6 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
 
             /**
              * 更新日志、更新配置信息
-             * @param jobConfig
-             * @param jobRunLogId
-             * @param jobStatus
-             * @param localLog
-             * @param appId
              */
             private void updateStatusAndLog(JobConfigDTO jobConfig, Long jobRunLogId,
                                             String jobStatus, String localLog, String appId) {

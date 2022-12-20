@@ -9,14 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AlarmLogMapper {
 
+    int insert(AlartLog alartLog);
 
-  int insert(AlartLog alartLog);
+    AlartLog selectByPrimaryKey(@Param("id") Long id);
 
-
-  AlartLog selectByPrimaryKey(@Param("id") Long id);
-
-
-  Page<AlartLog> selectByParam(AlartLogParam alartLogParam);
-
+    Page<AlartLog> selectByParam(AlartLogParam alartLogParam);
 
 }

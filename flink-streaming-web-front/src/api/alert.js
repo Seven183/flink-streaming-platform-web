@@ -7,9 +7,11 @@ import Qs from 'qs'
  * @param {*} pageSize
  * @param {任务编号} jobConfigId
  * @param {任务状态} status
+ * @param {告警类型} type
+ * @param {任务名称} jobName
  * @returns
  */
-export function alartLogList(pageNum, pageSize, jobConfigId, status) {
+export function alartLogList(pageNum, pageSize, jobConfigId, status, type, jobName) {
   return request({
     url: '/alartLogList',
     method: 'post',
@@ -19,7 +21,9 @@ export function alartLogList(pageNum, pageSize, jobConfigId, status) {
       pageNum: pageNum,
       pageSize: pageSize,
       jobConfigId: jobConfigId,
-      status: status
+      status: status,
+      type: type,
+      jobName: jobName
     }
   })
 }

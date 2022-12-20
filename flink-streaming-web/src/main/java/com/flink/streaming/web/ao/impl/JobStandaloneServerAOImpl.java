@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.flink.streaming.common.enums.JobTypeEnum;
 import com.flink.streaming.web.ao.JobBaseServiceAO;
 import com.flink.streaming.web.ao.JobServerAO;
+import com.flink.streaming.web.ao.WeChatService;
 import com.flink.streaming.web.common.FlinkStandaloneRestUriConstants;
 import com.flink.streaming.web.common.MessageConstants;
 import com.flink.streaming.web.common.SystemConstants;
@@ -30,16 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.Map;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2020-07-20
- * @time 23:11
- */
 @Component(SystemConstants.BEANNAME_JOBSTANDALONESERVERAO)
 @Slf4j
 public class JobStandaloneServerAOImpl implements JobServerAO {
-
 
     @Autowired
     private JobConfigService jobConfigService;
@@ -62,6 +56,9 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
     @Autowired
     private SystemConfigService systemConfigService;
 
+    @Autowired
+    private WeChatService weChatService;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void start(Long id, Long savepointId, String userName) {
@@ -78,7 +75,6 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
                             "请检查Flink任务列表，任务ID=[" + jobConfigDTO.getJobId() + "]处于[ " + jobStatus.getState() + "]状态，不能重复启动任务！");
                 }
             }
-
         }
 
         //1、检查jobConfigDTO 状态等参数
@@ -146,6 +142,7 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
         if (jobStandaloneInfo == null || StringUtils.isNotEmpty(jobStandaloneInfo.getErrors())
                 || !SystemConstants.STATUS_RUNNING.equals(jobStandaloneInfo.getState())) {
             log.warn(MessageConstants.MESSAGE_007, jobConfigDTO.getJobName());
+            weChatService.doAlarmNotify(jobConfigDTO, MessageConstants.MESSAGE_007);
             throw new BizException(MessageConstants.MESSAGE_007);
         }
 
@@ -171,6 +168,7 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
             commandRpcClinetAdapter.savepointForPerCluster(jobConfigDTO.getJobId(), targetDirectory);
         } catch (Exception e) {
             log.error(MessageConstants.MESSAGE_008, e);
+            weChatService.doAlarmNotify(jobConfigDTO, MessageConstants.MESSAGE_008);
             throw new BizException(MessageConstants.MESSAGE_008);
         }
 
@@ -178,6 +176,7 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
                 jobConfigDTO.getDeployModeEnum());
         if (StringUtils.isEmpty(savepointPath)) {
             log.warn(MessageConstants.MESSAGE_009, jobConfigDTO);
+            weChatService.doAlarmNotify(jobConfigDTO, MessageConstants.MESSAGE_009);
             throw new BizException(MessageConstants.MESSAGE_009);
         }
         //2、 执行保存Savepoint到本地数据库
@@ -211,9 +210,7 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
             batchJobRegister.deleteJob(id);
 
         }
-
     }
-
 
     private void checkSysConfig(Map<String, String> systemConfigMap, DeployModeEnum deployModeEnum) {
         if (systemConfigMap == null) {

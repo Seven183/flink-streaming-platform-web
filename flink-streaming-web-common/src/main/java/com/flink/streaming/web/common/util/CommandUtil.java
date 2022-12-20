@@ -23,10 +23,6 @@ public class CommandUtil {
 
     /**
      * 本地/Standalone Cluster模式
-     *
-     * @author zhuhuipei
-     * @date 2020/11/1
-     * @time 09:59
      */
     public static String buildRunCommandForCluster(
             JobRunParamDTO jobRunParamDTO,
@@ -80,10 +76,6 @@ public class CommandUtil {
 
     /**
      * jar并且构建运行命令
-     *
-     * @author zhuhuipei
-     * @date 2020-09-18
-     * @time 00:57
      */
     public static String buildRunCommandForYarnCluster(JobRunParamDTO jobRunParamDTO,
                                                        JobConfigDTO jobConfigDTO, String savepointPath) throws Exception {

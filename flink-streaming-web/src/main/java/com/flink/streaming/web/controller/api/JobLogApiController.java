@@ -18,37 +18,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 日志API
- *
- * @author wxj
- * @version V1.0
- * @date 2021年12月13日 下午4:16:29
  */
 @RestController
 @RequestMapping("/api")
 public class JobLogApiController extends BaseController {
 
-  @Autowired
-  private JobRunLogService jobRunLogService;
+    @Autowired
+    private JobRunLogService jobRunLogService;
 
-  @Autowired
-  private CustomConfig customConfig;
+    @Autowired
+    private CustomConfig customConfig;
 
-  @PostMapping(value = "/logList")
-  public RestResult<?> listTask(JobRunLogParam jobRunLogParam) {
-    PageModel<JobRunLogDTO> pageModel = jobRunLogService.queryJobRunLog(jobRunLogParam);
-    PageVO<PageModel<JobRunLogDTO>> pageVO = new PageVO<PageModel<JobRunLogDTO>>();
-    pageVO.setPageNum(pageModel.getPageNum());
-    pageVO.setPages(pageModel.getPages());
-    pageVO.setPageSize(pageModel.getPageSize());
-    pageVO.setTotal(pageModel.getTotal());
-    pageVO.setData(pageModel);
-    return RestResult.success(pageVO);
-  }
+    @PostMapping(value = "/logList")
+    public RestResult<?> listTask(JobRunLogParam jobRunLogParam) {
+        PageModel<JobRunLogDTO> pageModel = jobRunLogService.queryJobRunLog(jobRunLogParam);
+        PageVO<PageModel<JobRunLogDTO>> pageVO = new PageVO<PageModel<JobRunLogDTO>>();
+        pageVO.setPageNum(pageModel.getPageNum());
+        pageVO.setPages(pageModel.getPages());
+        pageVO.setPageSize(pageModel.getPageSize());
+        pageVO.setTotal(pageModel.getTotal());
+        pageVO.setData(pageModel);
+        return RestResult.success(pageVO);
+    }
 
-  @PostMapping(value = "/logDetail")
-  public RestResult<?> sysConfig(ModelMap modelMap, Long logid) {
-    JobRunLogVO vo = JobRunLogVO
-        .toVO(jobRunLogService.getDetailLogById(logid), YN.Y.getCode(), customConfig.getWebPort());
-    return RestResult.success(vo);
-  }
+    @PostMapping(value = "/logDetail")
+    public RestResult<?> sysConfig(ModelMap modelMap, Long logid) {
+        JobRunLogVO vo = JobRunLogVO
+                .toVO(jobRunLogService.getDetailLogById(logid), YN.Y.getCode(), customConfig.getWebPort());
+        return RestResult.success(vo);
+    }
 }

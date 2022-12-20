@@ -63,6 +63,9 @@
     <if test="status != null">
       and status = #{status,jdbcType=BIT}
     </if>
+    <if test="jobName != null">
+      and job_name like concat('%',#{jobName},'%')
+    </if>
     order by create_time desc
   </select>
 
