@@ -6,26 +6,20 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2022/10/29
- */
-
 @Component
-public final class  ApplicationContextProvider implements ApplicationContextAware {
+public final class ApplicationContextProvider implements ApplicationContextAware {
 
-  private static ApplicationContext context;
+    private static ApplicationContext context;
 
-  private ApplicationContextProvider() {
-  }
+    private ApplicationContextProvider() {
+    }
 
-  @Override
-  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-    context = applicationContext;
-  }
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        context = applicationContext;
+    }
 
-  public static <T> T getBean(Class<T> aClass) {
-    return context.getBean(aClass);
-  }
+    public static <T> T getBean(Class<T> aClass) {
+        return context.getBean(aClass);
+    }
 }

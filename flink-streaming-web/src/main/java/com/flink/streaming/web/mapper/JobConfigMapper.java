@@ -4,37 +4,38 @@ import com.flink.streaming.web.model.entity.BatchJob;
 import com.flink.streaming.web.model.entity.JobConfig;
 import com.flink.streaming.web.model.param.JobConfigParam;
 import com.github.pagehelper.Page;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface JobConfigMapper {
 
-  int insert(JobConfig record);
+    int insert(JobConfig record);
 
-  int insertWithId(JobConfig record);
+    int insertWithId(JobConfig record);
 
-  long selectCountByJobName(@Param("jobName") String jobName, @Param("id") Long id);
+    long selectCountByJobName(@Param("jobName") String jobName, @Param("id") Long id);
 
-  JobConfig selectByPrimaryKey(Long id);
+    JobConfig selectByPrimaryKey(Long id);
 
-  JobConfig selectByPrimaryKeyContainDelete(Long id);
+    JobConfig selectByPrimaryKeyContainDelete(Long id);
 
-  int updateByPrimaryKeySelective(JobConfig record);
+    int updateByPrimaryKeySelective(JobConfig record);
 
 
-  int updateStatusByStart(@Param("id") Long id, @Param("status") Integer status,
-      @Param("userName") String userName,
-      @Param("jobRunLogId") Long jobRunLogId, @Param("oldVersion") Integer oldVersion);
+    int updateStatusByStart(@Param("id") Long id, @Param("status") Integer status,
+                            @Param("userName") String userName,
+                            @Param("jobRunLogId") Long jobRunLogId, @Param("oldVersion") Integer oldVersion);
 
-  Page<JobConfig> findJobConfig(JobConfigParam jobConfigParam);
+    Page<JobConfig> findJobConfig(JobConfigParam jobConfigParam);
 
-  int deleteById(@Param("id") Long id, @Param("userName") String userName);
+    int deleteById(@Param("id") Long id, @Param("userName") String userName);
 
-  int recoveryDeleteJobConfigById(@Param("id") Long id, @Param("userName") String userName);
+    int recoveryDeleteJobConfigById(@Param("id") Long id, @Param("userName") String userName);
 
-  List<JobConfig> findJobConfigByStatus(@Param("statusList") List<Integer> statusList);
+    List<JobConfig> findJobConfigByStatus(@Param("statusList") List<Integer> statusList);
 
-  List<BatchJob> getAllBatchJobs();
+    List<BatchJob> getAllBatchJobs();
 }

@@ -174,9 +174,9 @@ public class JobConfigApiController extends BaseController {
     }
 
     @PostMapping(value = "/editConfig")
-    public RestResult editConfig(UpsertJobConfigParam upsertJobConfigParam) {
+    public RestResult<?> editConfig(UpsertJobConfigParam upsertJobConfigParam) {
         try {
-            RestResult restResult = checkUpsertJobConfigParam(upsertJobConfigParam);
+            RestResult<?> restResult = checkUpsertJobConfigParam(upsertJobConfigParam);
             if (restResult != null) {
                 return restResult;
             }
@@ -244,7 +244,7 @@ public class JobConfigApiController extends BaseController {
      * 查询作业列表
      */
     @PostMapping(value = "/listTask")
-    public RestResult listTask(ModelMap modelMap, JobConfigParam jobConfigParam) {
+    public RestResult<?> listTask(ModelMap modelMap, JobConfigParam jobConfigParam) {
         if (jobConfigParam == null) {
             jobConfigParam = new JobConfigParam();
         }
@@ -567,14 +567,17 @@ public class JobConfigApiController extends BaseController {
             for (AlarmTypeEnum alarmTypeEnum : list) {
                 alarmTypes.add(alarmTypeEnum.getCode());
                 if (str.length() > 1) {
-                    str.append(" ");
+                    str.append(", ");
                 }
                 switch (alarmTypeEnum) {
                     case DINGDING:
                         str.append("钉钉");
                         break;
                     case CALLBACK_URL:
-                        str.append("回调");
+                        str.append("http回调");
+                        break;
+                    case WECHAT:
+                        str.append("企业微信");
                         break;
                     case AUTO_START_JOB:
                         str.append("自动重启");
@@ -626,14 +629,17 @@ public class JobConfigApiController extends BaseController {
                 for (AlarmTypeEnum alarmTypeEnum : list) {
                     alarmTypes.add(alarmTypeEnum.getCode());
                     if (str.length() > 1) {
-                        str.append(" ");
+                        str.append(", ");
                     }
                     switch (alarmTypeEnum) {
                         case DINGDING:
                             str.append("钉钉");
                             break;
                         case CALLBACK_URL:
-                            str.append("回调");
+                            str.append("http回调");
+                            break;
+                        case WECHAT:
+                            str.append("企业微信");
                             break;
                         case AUTO_START_JOB:
                             str.append("自动重启");

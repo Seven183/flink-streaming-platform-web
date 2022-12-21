@@ -10,7 +10,7 @@
             <i slot="reference" class="el-icon-info" />
           </el-popover>
         </span>
-        <el-input v-model="form.wechat_alart_url" placeholder="钉钉告警所需的url" class="fl-form-item" />
+        <el-input v-model="form.wechat_alart_url" placeholder="企业微信告警所需的url" class="fl-form-item" />
         <el-button type="primary" @click="updateConfig('wechat_alart_url', form.wechat_alart_url)">提交</el-button>
         <el-button type="danger" @click="deleteConfig('wechat_alart_url')">删除</el-button>
         <el-button type="success" @click="testalarm('/testEnterpriseWeChatAlert')">测试一下</el-button>

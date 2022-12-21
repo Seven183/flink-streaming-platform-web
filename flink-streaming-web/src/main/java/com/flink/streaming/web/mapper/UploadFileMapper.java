@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UploadFileMapper {
 
-  int deleteById(@Param("id") Long id);
+    int deleteById(@Param("id") Long id);
 
-  UploadFile getFileByName(@Param("fileName") String fileName);
+    UploadFile getFileByName(@Param("fileName") String fileName);
 
-  UploadFile getFileById(@Param("id") Long id);
+    UploadFile getFileById(@Param("id") Long id);
 
-  int insert(UploadFile uploadFile);
+    int insert(UploadFile uploadFile);
 
-  Page<UploadFile> findFilesByPage(UploadFileParam uploadFileParam);
+    Page<UploadFile> findFilesByPage(UploadFileParam uploadFileParam);
 
 }

@@ -6,12 +6,12 @@ import com.flink.streaming.web.model.param.UploadFileParam;
 
 public interface UploadFileService {
 
-  void addFile(UploadFileDTO uploadFileDTO);
+    void addFile(UploadFileDTO uploadFileDTO);
 
-  void deleteFile(Long id);
+    void deleteFile(Long id);
 
-  PageModel<UploadFileDTO> queryUploadFile(UploadFileParam uploadFileParam);
+    PageModel<UploadFileDTO> queryUploadFile(UploadFileParam uploadFileParam);
 
-  UploadFileDTO getUploadFileByFileName(String fileName);
+    UploadFileDTO getUploadFileByFileName(String fileName);
 
 }

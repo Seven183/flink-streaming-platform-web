@@ -9,12 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2018/5/9
- * @time 下午4:12
- */
 @Component
 @Order(0)
 @Slf4j
@@ -23,14 +17,12 @@ import org.springframework.stereotype.Component;
 public class ApplicationRunner implements org.springframework.boot.ApplicationRunner {
 
 
-  @Autowired
-  private IpStatusService ipStatusService;
+    @Autowired
+    private IpStatusService ipStatusService;
 
-
-  @Override
-  public void run(ApplicationArguments args) throws Exception {
-    ipStatusService.registerIp();
-  }
-
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+        ipStatusService.registerIp();
+    }
 
 }

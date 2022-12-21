@@ -17,12 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2020-07-10
- * @time 01:27
- */
 @Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {

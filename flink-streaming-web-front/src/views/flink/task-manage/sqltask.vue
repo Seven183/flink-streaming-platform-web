@@ -133,9 +133,10 @@
         <el-col :xs="16" :sm="16" :md="14" :lg="12">
           <el-form-item label="告警配置" prop="alarmTypes">
             <el-checkbox-group v-model="form.alarmTypes">
+              <el-checkbox :label="3">企业微信告警</el-checkbox>
               <el-checkbox :label="1">钉钉告警</el-checkbox>
               <el-checkbox :label="2">Http回调告警</el-checkbox>
-              <el-checkbox :label="3">任务退出自动拉起</el-checkbox>
+              <!--              <el-checkbox :label="4">异常自动自动拉起</el-checkbox>-->
             </el-checkbox-group>
           </el-form-item>
         </el-col>
@@ -337,7 +338,7 @@ export default {
           if (!data.id && this.params.flag === 'create') {
             addConfig(data).then(response => {
               this.loading = false
-              const { code, data, success, message } = response
+              const { code, success, message } = response
               if (code !== '200' || !success) {
                 this.$message({ type: 'error', message: (message || '请求数据异常！') })
                 return
@@ -352,7 +353,7 @@ export default {
           } else if (data.id && this.params.flag === 'update') {
             editConfig(data).then(response => {
               this.loading = false
-              const { code, data, success, message } = response
+              const { code, success, message } = response
               if (code !== '200' || !success) {
                 this.$message({ type: 'error', message: (message || '请求数据异常！') })
                 return
@@ -381,7 +382,7 @@ export default {
       const sql = this.$refs.cm.codemirror.getValue()
       checkfSql(sql).then(response => {
         this.loading = false
-        const { code, success, message, data } = response
+        const { code, success, message } = response
         if (code !== '200' || !success) {
           this.$message({ type: 'error', message: (message || '请求数据异常！') })
           return

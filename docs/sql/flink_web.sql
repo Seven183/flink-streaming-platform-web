@@ -191,7 +191,7 @@ CREATE TABLE `job_alarm_config`
 (
     `id`          bigint(11) unsigned NOT NULL AUTO_INCREMENT,
     `job_id`      bigint(11) unsigned NOT NULL COMMENT 'job_config主表id',
-    `type`        tinyint(1)          NOT NULL COMMENT '类型 1:钉钉告警 2:url回调 3:异常自动拉起任务',
+    `type`        tinyint(1)          NOT NULL COMMENT '1:钉钉告警 2:url回调 3:企业微信 4:异常自动拉起任务',
     `version`     int(11)             NOT NULL DEFAULT '0' COMMENT '更新版本号  ',
     `is_deleted`  tinyint(1)          NOT NULL DEFAULT '0',
     `create_time` datetime                     DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

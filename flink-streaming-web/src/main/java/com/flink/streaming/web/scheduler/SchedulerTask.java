@@ -13,12 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2015/9/6
- * @time 下午5:01
- */
 @Slf4j
 @Component
 @Configurable

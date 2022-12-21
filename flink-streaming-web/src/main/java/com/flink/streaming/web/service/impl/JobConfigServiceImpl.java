@@ -22,12 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @author zhuhuipei
- * @Description:
- * @date 2020-07-14
- * @time 19:02
- */
 @Slf4j
 @Service
 public class JobConfigServiceImpl implements JobConfigService {
