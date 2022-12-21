@@ -1,15 +1,14 @@
 package com.flink.streaming.web.controller.api;
 
 import cn.hutool.core.collection.CollectionUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.flink.streaming.common.constant.SystemConstant;
 import com.flink.streaming.common.enums.JobTypeEnum;
 import com.flink.streaming.common.model.CheckPointParam;
 import com.flink.streaming.web.ao.JobConfigAO;
 import com.flink.streaming.web.ao.JobServerAO;
-import com.flink.streaming.web.common.FlinkConstants;
-import com.flink.streaming.web.common.FlinkYarnRestUriConstants;
-import com.flink.streaming.web.common.RestResult;
-import com.flink.streaming.web.common.SystemConstants;
+import com.flink.streaming.web.common.*;
 import com.flink.streaming.web.common.util.CliConfigUtil;
 import com.flink.streaming.web.common.util.HttpServiceCheckerUtil;
 import com.flink.streaming.web.common.util.HttpUtil;
@@ -155,7 +154,7 @@ public class JobConfigApiController extends BaseController {
     }
 
     @PostMapping(value = "/addConfig")
-    public RestResult addConfig(UpsertJobConfigParam upsertJobConfigParam) {
+    public RestResult<?> addConfig(UpsertJobConfigParam upsertJobConfigParam) {
 
         try {
             RestResult restResult = checkUpsertJobConfigParam(upsertJobConfigParam);
@@ -467,6 +466,22 @@ public class JobConfigApiController extends BaseController {
             RestResult restResult = this.checkPointParam(checkPointParam);
             if (restResult != null && !restResult.isSuccess()) {
                 return restResult;
+            }
+        } else {
+
+            String targetDirectory = SystemConstants.DEFAULT_SAVEPOINT_ROOT_PATH;
+            String flinkHttpAddress = systemConfigService.getSystemConfigByKey(SysConfigEnum.FLINK_REST_HTTP_ADDRESS.getKey());
+            String uriJobsForStandalone = FlinkStandaloneRestUriConstants.getUriJobsForStandalone();
+            String url = HttpUtil.buildUrl(flinkHttpAddress, uriJobsForStandalone);
+            String res = HttpUtil.buildRestTemplate(HttpUtil.TIME_OUT_1_M).getForObject(url, String.class);
+
+            JSONArray objects = JSONArray.parseArray(res);
+            for (int i = 0; i <= objects.size() - 1; i++) {
+                JSONObject jsonObject = JSONObject.parseObject(objects.get(i).toString());
+                if (jsonObject.get("key").equals("state.savepoints.dir")) {
+                    targetDirectory = "-checkpointDir " + jsonObject.get("value").toString();
+                    upsertJobConfigParam.setFlinkCheckpointConfig(targetDirectory);
+                }
             }
         }
 
