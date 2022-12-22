@@ -1,10 +1,7 @@
 package com.flink.streaming.web.ao.impl;
 
 import com.flink.streaming.common.enums.JobTypeEnum;
-import com.flink.streaming.web.ao.AlarmServiceAO;
-import com.flink.streaming.web.ao.DingDingService;
-import com.flink.streaming.web.ao.JobServerAO;
-import com.flink.streaming.web.ao.TaskServiceAO;
+import com.flink.streaming.web.ao.*;
 import com.flink.streaming.web.common.SystemConstants;
 import com.flink.streaming.web.common.util.YarnUtil;
 import com.flink.streaming.web.config.AlarmPoolConfig;
@@ -22,6 +19,7 @@ import com.flink.streaming.web.service.JobConfigService;
 import com.flink.streaming.web.service.SystemConfigService;
 import com.flink.streaming.web.thread.AlarmDingdingThread;
 import com.flink.streaming.web.thread.AlarmHttpThread;
+import com.flink.streaming.web.thread.AlarmWeChatThread;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -67,6 +65,9 @@ public class TaskServiceAOImpl implements TaskServiceAO {
 
     @Autowired
     private DingDingService dingDingService;
+
+    @Autowired
+    private WeChatService weChatService;
 
     private ThreadPoolExecutor threadPoolExecutor = AlarmPoolConfig.getInstance()
             .getThreadPoolExecutor();
@@ -276,7 +277,8 @@ public class TaskServiceAOImpl implements TaskServiceAO {
         threadPoolExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                dingDingService.doAlarmNotify(cusContent, jobConfigDTO, deployModeEnum);
+//          dingDingService.doAlarmNotify(cusContent, jobConfigDTO, deployModeEnum);
+                weChatService.doAlarmNotify(jobConfigDTO, cusContent);
             }
         });
         if (CollectionUtils.isEmpty(alarmTypeEnumList)) {
@@ -286,17 +288,20 @@ public class TaskServiceAOImpl implements TaskServiceAO {
         }
         CallbackDTO callbackDTO = CallbackDTO.to(jobConfigDTO);
         //告警
-        for (AlarmTypeEnum alarmTypeEnum : alarmTypeEnumList) {
-            switch (alarmTypeEnum) {
-                case DINGDING:
-                    this.dingdingAlarm(cusContent, callbackDTO.getJobConfigId());
-                    break;
-                case CALLBACK_URL:
-                    this.httpAlarm(callbackDTO);
-                    break;
-                default:
-            }
-        }
+//        for (AlarmTypeEnum alarmTypeEnum : alarmTypeEnumList) {
+//            switch (alarmTypeEnum) {
+//                case DINGDING:
+//                    this.dingdingAlarm(cusContent, callbackDTO.getJobConfigId());
+//                    break;
+//                case CALLBACK_URL:
+//                    this.httpAlarm(callbackDTO);
+//                    break;
+//                case WECHAT:
+//                    this.weChatAlarm(cusContent, callbackDTO.getJobConfigId());
+//                    break;
+//                default:
+//            }
+//        }
         //自动拉起
         if (alarmTypeEnumList.contains(AlarmTypeEnum.AUTO_START_JOB)) {
             log.info("校验任务不存在,开始自动拉起 JobConfigId={}", callbackDTO.getJobConfigId());
@@ -335,6 +340,24 @@ public class TaskServiceAOImpl implements TaskServiceAO {
         }
         threadPoolExecutor
                 .execute(new AlarmDingdingThread(alarmServiceAO, content, jobConfigId, alartUrl));
+    }
+
+    /**
+     * 微信告警
+     *
+     * @author zhuhuipei
+     * @date 2021/2/28
+     * @time 19:56
+     */
+    private void weChatAlarm(String content, Long jobConfigId) {
+        String alartUrl = systemConfigService
+                .getSystemConfigByKey(SysConfigEnum.ENTERPRISEWECHAT_ALARM_URL.getKey());
+        if (StringUtils.isEmpty(alartUrl)) {
+            log.warn("##### 微信告警url没有设置，任务[{}]无法告警 #####", jobConfigId);
+            return;
+        }
+        threadPoolExecutor
+                .execute(new AlarmWeChatThread(alarmServiceAO, content, jobConfigId, alartUrl));
     }
 
     /**
