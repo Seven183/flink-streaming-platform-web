@@ -103,7 +103,7 @@
             <el-col :span="24">
               <el-form-item label="运行模式" prop="deployModeEnum">
                 <el-select v-model="form.deployModeEnum" placeholder="请选择运行模式" class="fl-form-item">
-                  <el-option label="Local Cluster" value="LOCAL" />
+                  <!--                  <el-option label="Local Cluster" value="LOCAL" />-->
                   <el-option label="Standalone Cluster" value="STANDALONE" />
                   <el-option label="YARN PER" value="YARN_PER" />
                   <el-option label="YARN APPLICATION" value="YARN_APPLICATION" />
@@ -140,22 +140,22 @@
             </el-checkbox-group>
           </el-form-item>
         </el-col>
-        <el-col :xs="4" :sm="4" :md="5" :lg="6">
-          <el-form-item label="开启状态">
-            <el-switch v-model="form.isOpen" :active-value="1" :inactive-value="0" active-color="#13ce66" disabled />
-          </el-form-item>
-        </el-col>
-        <el-col :xs="4" :sm="4" :md="5" :lg="6">
-          <el-form-item label="运行状态">
-            <el-tag v-if="form.status===-2||form.status==='UNKNOWN'" type="info" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else-if="form.status===-1||form.status==='FAIL'" type="danger" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else-if="form.status===0||form.status==='STOP'" type="warning" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else-if="form.status===1||form.status==='RUN'" type="success" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else-if="form.status===2||form.status==='STARTING'" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else-if="form.status===3||form.status==='SUCCESS'" type="success" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-            <el-tag v-else type="info" size="mini">{{ getStatusDesc(form.status) }}</el-tag>
-          </el-form-item>
-        </el-col>
+        <!--        <el-col :xs="4" :sm="4" :md="5" :lg="6">-->
+        <!--          <el-form-item label="开启状态">-->
+        <!--            <el-switch v-model="form.isOpen" :active-value="1" :inactive-value="0" active-color="#13ce66" disabled />-->
+        <!--          </el-form-item>-->
+        <!--        </el-col>-->
+        <!--        <el-col :xs="4" :sm="4" :md="5" :lg="6">-->
+        <!--          <el-form-item label="运行状态">-->
+        <!--            <el-tag v-if="form.status===-2||form.status==='UNKNOWN'" type="info" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else-if="form.status===-1||form.status==='FAIL'" type="danger" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else-if="form.status===0||form.status==='STOP'" type="warning" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else-if="form.status===1||form.status==='RUN'" type="success" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else-if="form.status===2||form.status==='STARTING'" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else-if="form.status===3||form.status==='SUCCESS'" type="success" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--            <el-tag v-else type="info" size="mini">{{ getStatusDesc(form.status) }}</el-tag>-->
+        <!--          </el-form-item>-->
+        <!--        </el-col>-->
       </el-row>
       <el-row :class="getTaskClass()">
         <el-col :span="24">

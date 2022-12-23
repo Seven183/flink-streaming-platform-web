@@ -114,7 +114,7 @@
         <el-col :span="10">
           <el-form-item label="运行模式" prop="deployModeEnum">
             <el-select v-model="form.deployModeEnum" placeholder="请选择运行模式" class="fl-form-item">
-              <el-option label="Local Cluster" value="LOCAL" />
+              <!--              <el-option label="Local Cluster" value="LOCAL" />-->
               <el-option label="Standalone Cluster" value="STANDALONE" />
               <el-option label="YARN PER" value="YARN_PER" />
               <el-option label="YARN APPLICATION" value="YARN_APPLICATION" />
