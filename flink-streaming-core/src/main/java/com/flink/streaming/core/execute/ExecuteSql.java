@@ -10,9 +10,9 @@ import org.apache.flink.table.api.TableEnvironment;
 import org.apache.flink.table.api.TableResult;
 import org.apache.flink.table.api.internal.TableEnvironmentInternal;
 import org.apache.flink.table.delegation.Parser;
+import org.apache.flink.table.operations.CatalogSinkModifyOperation;
 import org.apache.flink.table.operations.ModifyOperation;
 import org.apache.flink.table.operations.Operation;
-import org.apache.flink.table.operations.SinkModifyOperation;
 import org.apache.flink.table.operations.command.SetOperation;
 
 import java.util.ArrayList;
@@ -89,8 +89,8 @@ public class ExecuteSql {
         case "NopOperation":
           ((TableEnvironmentInternal) tEnv).executeInternal(parser.parse(stmt).get(0));
           break;
-        case "SinkModifyOperation":
-          modifyOperationList.add((SinkModifyOperation) operation);
+        case "CatalogSinkModifyOperation":
+          modifyOperationList.add((CatalogSinkModifyOperation) operation);
           break;
         default:
           throw new RuntimeException("不支持该语法 sql=" + stmt);
